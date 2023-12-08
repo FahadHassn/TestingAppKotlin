@@ -17,13 +17,30 @@
         android:textColor="@color/white"
         android:text="Lifecycle"/>
 
+    <FrameLayout
+        android:id="@+id/_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_text">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img" />
+
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/_linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/_text">
+        android:layout_below="@id/_frameLayout">
 
         <EditText
             android:layout_width="wrap_content"
@@ -51,6 +68,7 @@
         android:layout_below="@id/_linear1"/>
 
     <LinearLayout
+        android:id="@+id/_linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"

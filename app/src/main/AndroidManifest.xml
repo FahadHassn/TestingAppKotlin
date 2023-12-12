@@ -13,11 +13,8 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".ProgramaticallyConstraintActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ConstraintActivity"
-            android:exported="true">
+            android:name=".ListViewActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,8 +22,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ProgrammaticallyConstraintActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".ConstraintActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

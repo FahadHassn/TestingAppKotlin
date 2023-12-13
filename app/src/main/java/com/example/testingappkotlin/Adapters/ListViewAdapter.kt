@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.testingappkotlin.Modals.ListViewModal
+import com.example.testingappkotlin.Modals.ItemViewModal
 import com.example.testingappkotlin.R
 
-class ListViewAdapter(private val context: Context, private val list: List<ListViewModal>) : BaseAdapter(){
+class ListViewAdapter(private val context: Context, private val list: List<ItemViewModal>) : BaseAdapter(){
     override fun getCount(): Int {
         return list.size
     }
 
-    override fun getItem(position: Int): ListViewModal {
+    override fun getItem(position: Int): ItemViewModal {
         return list[position]
     }
 

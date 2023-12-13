@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="15dp"
+    tools:context=".RelativeTaskActivity">
+
+    <TextView
+        android:id="@+id/_txtSignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:text="Sign In"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/_txtEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/_txtSignIn"
+        android:layout_marginTop="25dp"
+        android:text="Email"
+        android:textSize="20sp" />
+    
+    <EditText
+        android:id="@+id/_edtEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/_txtEmail"
+        android:layout_marginVertical="10dp"
+        android:padding="16dp"
+        android:background="@drawable/edittext_background"
+        android:textSize="20sp"
+        android:hint="Enter your email" />
+
+    <TextView
+        android:id="@+id/_txtValidEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="Email should be valid"
+        android:textStyle="bold"
+        android:layout_below="@id/_edtEmail" />
+
+    <TextView
+        android:id="@+id/_txtPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/_txtValidEmail"
+        android:layout_marginTop="20dp"
+        android:text="Password"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/_edtPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/_txtPassword"
+        android:layout_marginVertical="10dp"
+        android:padding="16dp"
+        android:drawableEnd="@drawable/baseline_visibility_off_24"
+        android:background="@drawable/edittext_background"
+        android:textSize="20sp"
+        android:hint="Enter your password" />
+
+    <TextView
+        android:id="@+id/_txtValidPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:text="Password should be valid"
+        android:layout_below="@id/_edtPassword" />
+
+    <TextView
+        android:id="@+id/_txtForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_txtValidPassword"
+        android:layout_marginTop="20dp"
+        android:text="Forgot Password?"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/_btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_txtForgot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:hint="Sign In"
+        android:backgroundTint="#ECECEC"
+        android:textSize="20sp"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="40dp" />
+
+    <TextView
+        android:id="@+id/_txtContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_btnSignIn"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:text="Or continue with"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/_btnGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_txtContinue"
+        android:text="Google"
+        android:layout_marginTop="25dp"
+        android:layout_toStartOf="@id/_view"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/google"
+        android:backgroundTint="#e2e2e2"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        android:paddingVertical="16dp" />
+
+    <View
+        android:id="@+id/_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/_txtContinue"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/_btnFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_txtContinue"
+        android:layout_toEndOf="@id/_view"
+        android:text="Facebook"
+        android:drawableLeft="@drawable/facebook"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#36548f"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:paddingVertical="16dp" />
+
+</RelativeLayout>

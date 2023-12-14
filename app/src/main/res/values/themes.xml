@@ -2,8 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TestingAppKotlin" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.TestingAppKotlin" parent="Base.Theme.TestingAppKotlin" />
+    
+    <style name="ImageCorner" parent="">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+
+    </style>
+    
 </resources>

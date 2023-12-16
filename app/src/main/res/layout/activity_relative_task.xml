@@ -100,30 +100,14 @@
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/_btnSignInRLight"
+        android:id="@+id/_btnSignInR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/_txtForgot"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:hint="Sign In"
+        android:text="Sign In"
         android:enabled="false"
-        android:backgroundTint="#ECECEC"
-        android:textSize="20sp"
-        android:paddingVertical="20dp"
-        android:paddingHorizontal="40dp" />
-
-    <Button
-        android:id="@+id/_btnSignInRBlack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/_txtForgot"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:hint="Sign In"
-        android:textColorHint="@color/white"
-        android:visibility="gone"
-        android:backgroundTint="@color/black"
         android:textSize="20sp"
         android:paddingVertical="20dp"
         android:paddingHorizontal="40dp" />

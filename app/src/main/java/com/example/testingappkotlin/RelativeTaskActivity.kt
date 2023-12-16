@@ -1,17 +1,20 @@
 package com.example.testingappkotlin
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.core.content.ContextCompat
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -22,10 +25,10 @@ class RelativeTaskActivity : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var txtEmail: TextView
     private lateinit var txtPassword: TextView
-    private lateinit var buttonLight: Button
-    private lateinit var buttonBlack: Button
+    private lateinit var button: Button
+    private var passwordVisible = false
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_relative_task)
@@ -34,32 +37,34 @@ class RelativeTaskActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id._edtPasswordR)
         txtEmail = findViewById(R.id._txtValidEmailR)
         txtPassword = findViewById(R.id._txtValidPasswordR)
-        buttonLight = findViewById(R.id._btnSignInRLight)
-        buttonBlack = findViewById(R.id._btnSignInRBlack)
+        button = findViewById(R.id._btnSignInR)
         val defaultTextColor = edtEmail.currentTextColor
 
-        edtEmail.addTextChangedListener(object: TextWatcher{
+        edtEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidEmail(edtEmail.text.toString().trim())){
+                if (isValidEmail(edtEmail.text.toString().trim())) {
                     txtEmail.text = "Perfect!"
                     txtEmail.setTextColor(Color.GREEN)
-                    if (isValidPassword(edtPassword.text.toString().trim())){
-                        buttonLight.isGone = true
-                        buttonBlack.isVisible = true
-                    }else{
-                        buttonLight.isVisible = true
+                    if (isValidPassword(edtPassword.text.toString().trim())) {
+                        button.isEnabled = true
+                        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
+                        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
                     }
-                }else{
+                } else {
+                    button.isEnabled = false
+                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
+                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
                     txtEmail.text = "Invalid email!"
                     txtEmail.setTextColor(Color.RED)
-                    buttonBlack.isGone = true
-                    buttonLight.isVisible = true
                 }
 
-                if (edtEmail.text.toString().isEmpty()){
+                if (edtEmail.text.toString().isEmpty()) {
+                    button.isEnabled = false
+                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
+                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
                     txtEmail.text = "Email should be valid"
                     txtEmail.setTextColor(defaultTextColor)
                 }
@@ -70,28 +75,32 @@ class RelativeTaskActivity : AppCompatActivity() {
             }
 
         })
-        edtPassword.addTextChangedListener(object: TextWatcher{
+
+        edtPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (isValidPassword(edtPassword.text.toString().trim())){
+                if (isValidPassword(edtPassword.text.toString().trim())) {
                     txtPassword.text = "Perfect!"
                     txtPassword.setTextColor(Color.GREEN)
-                    if (isValidEmail(edtEmail.text.toString().trim())){
-                        buttonLight.isGone = true
-                        buttonBlack.isVisible = true
-                    }else{
-                        buttonLight.isVisible = true
+                    if (isValidEmail(edtEmail.text.toString().trim())) {
+                        button.isEnabled = true
+                        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
+                        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
                     }
-                }else{
+                } else {
+                    button.isEnabled = false
+                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
+                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
                     txtPassword.text = "Invalid password!"
                     txtPassword.setTextColor(Color.RED)
-                    buttonBlack.isGone = true
-                    buttonLight.isVisible = true
                 }
 
-                if (edtPassword.text.toString().isEmpty()){
+                if (edtPassword.text.toString().isEmpty()) {
+                    button.isEnabled = false
+                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
+                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
                     txtPassword.text = "Password should be valid"
                     txtPassword.setTextColor(defaultTextColor)
 
@@ -105,8 +114,19 @@ class RelativeTaskActivity : AppCompatActivity() {
 
         //hide and show password
 
+        edtPassword.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableRight = 2 // Index of drawableEnd
+                if (event.rawX >= edtPassword.right - edtPassword.compoundDrawables[drawableRight].bounds.width()
+                ) {
+                    togglePasswordVisibility()
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
 
-        buttonBlack.setOnClickListener {
+        button.setOnClickListener {
 //            if (edtEmail.text.toString().isNotEmpty()){
 //                if (!isValidEmail(edtEmail.text.toString().trim())) {
 //                    Toast.makeText(this,"Invalid email address",Toast.LENGTH_SHORT).show()
@@ -126,8 +146,37 @@ class RelativeTaskActivity : AppCompatActivity() {
 //                return@setOnClickListener
 //            }
             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MainActivity::class.java))
+
         }
 
+    }
+
+    private fun togglePasswordVisibility() {
+        if (passwordVisible) {
+            // Hide the password
+            edtPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            edtPassword.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_visibility_24,
+                0
+            )
+            passwordVisible = false
+        } else {
+            // Show the password
+            edtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            edtPassword.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.baseline_visibility_off_24,
+                0
+            )
+            passwordVisible = true
+        }
+
+        // Move the cursor to the end of the text
+        edtPassword.setSelection(edtPassword.text.length)
     }
 
     private fun isValidPassword(password: String?): Boolean {
@@ -141,7 +190,8 @@ class RelativeTaskActivity : AppCompatActivity() {
     }
 
     private fun isValidEmail(email: String?): Boolean {
-        val emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        val emailPattern =
+            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
         val pattern: Pattern = Pattern.compile(emailPattern)
         val matcher: Matcher = pattern.matcher(email)
         return matcher.matches()

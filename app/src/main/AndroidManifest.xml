@@ -13,14 +13,14 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".Intent.ExplicitIntentActivity"
+            android:exported="false" />
+        <activity
             android:name=".RecyclerviewActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ConstraintTaskActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".RelativeTaskActivity"
             android:exported="true">
@@ -32,9 +32,7 @@
         </activity>
         <activity
             android:name=".LinearTaskActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ListViewActivity"
             android:exported="true" />
@@ -46,7 +44,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true"></activity>
     </application>
 
 </manifest>

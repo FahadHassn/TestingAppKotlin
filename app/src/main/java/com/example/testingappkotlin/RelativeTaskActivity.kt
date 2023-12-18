@@ -49,22 +49,16 @@ class RelativeTaskActivity : AppCompatActivity() {
                     txtEmail.text = "Perfect!"
                     txtEmail.setTextColor(Color.GREEN)
                     if (isValidPassword(edtPassword.text.toString().trim())) {
-                        button.isEnabled = true
-                        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
-                        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
+                        enableTrue()
                     }
                 } else {
-                    button.isEnabled = false
-                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
-                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+                    enableFalse()
                     txtEmail.text = "Invalid email!"
                     txtEmail.setTextColor(Color.RED)
                 }
 
                 if (edtEmail.text.toString().isEmpty()) {
-                    button.isEnabled = false
-                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
-                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+                    enableFalse()
                     txtEmail.text = "Email should be valid"
                     txtEmail.setTextColor(defaultTextColor)
                 }
@@ -85,22 +79,16 @@ class RelativeTaskActivity : AppCompatActivity() {
                     txtPassword.text = "Perfect!"
                     txtPassword.setTextColor(Color.GREEN)
                     if (isValidEmail(edtEmail.text.toString().trim())) {
-                        button.isEnabled = true
-                        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
-                        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
+                        enableTrue()
                     }
                 } else {
-                    button.isEnabled = false
-                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
-                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+                    enableFalse()
                     txtPassword.text = "Invalid password!"
                     txtPassword.setTextColor(Color.RED)
                 }
 
                 if (edtPassword.text.toString().isEmpty()) {
-                    button.isEnabled = false
-                    button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
-                    button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+                    enableFalse()
                     txtPassword.text = "Password should be valid"
                     txtPassword.setTextColor(defaultTextColor)
 
@@ -196,4 +184,17 @@ class RelativeTaskActivity : AppCompatActivity() {
         val matcher: Matcher = pattern.matcher(email)
         return matcher.matches()
     }
+
+    private fun enableTrue(){
+        button.isEnabled = true
+        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
+        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
+    }
+
+    private fun enableFalse(){
+        button.isEnabled = false
+        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
+        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+    }
+
 }

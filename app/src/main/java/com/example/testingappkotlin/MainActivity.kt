@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Spinner
+
         spinner = findViewById(R.id._spinner)
         ArrayAdapter.createFromResource(
             this,

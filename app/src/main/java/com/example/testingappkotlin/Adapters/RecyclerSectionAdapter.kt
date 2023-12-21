@@ -4,13 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testingappkotlin.Interface.OnItemClickListener
 import com.example.testingappkotlin.Modals.Section
 import com.example.testingappkotlin.Modals.SectionModel
 import com.example.testingappkotlin.R
 
-class RecyclerSectionAdapter(private val context: Context, private val list: List<Section>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class RecyclerSectionAdapter(private val context: Context, private var list: List<Section>, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val ITEM_VIEW_TYPE_HEADER = 0
     private val ITEM_VIEW_TYPE_ITEM = 1
@@ -23,42 +25,48 @@ class RecyclerSectionAdapter(private val context: Context, private val list: Lis
             }
             ITEM_VIEW_TYPE_ITEM -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.recyclerview_section_design, parent, false)
-                SectionViewHolder(view)
+                SectionViewHolder(view,)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
+    fun reloadData( lists: List<Section>){
+        this.list= lists
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
-        return list.sumOf { it.sections.size + 1 }
+        return list.sumOf { it.sections.size+1 }
+//        return list.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             ITEM_VIEW_TYPE_HEADER -> {
                 val sectionHeaderViewHolder = holder as SectionHeaderViewHolder
-                val section = getSectionForPosition(position)
-                sectionHeaderViewHolder.bind(section.title)
+                val sectionHeader = getSectionForPosition(position)
+                sectionHeaderViewHolder.bind(sectionHeader.title)
             }
             ITEM_VIEW_TYPE_ITEM -> {
                 val sectionViewHolder = holder as SectionViewHolder
-                val section = getItem(position)
-                sectionViewHolder.bind(section)
+                val sectionItem = getItem(position)
+                sectionViewHolder.bind(sectionItem)
             }
         }
+
     }
 
     private fun getSectionForPosition(position: Int): Section {
         var adjustedPosition = position
         for (section in list) {
-            if (adjustedPosition == 0) {
+            adjustedPosition -= if (adjustedPosition == 0) {
                 return section
             } else if (adjustedPosition <= section.sections.size) {
                 // Move to the next section
-                adjustedPosition -= section.sections.size + 1
+                section.sections.size + 1
             } else {
                 // Move to the next section
-                adjustedPosition -= section.sections.size + 1
+                section.sections.size + 1
             }
         }
         throw IndexOutOfBoundsException("Invalid position")
@@ -96,16 +104,26 @@ class RecyclerSectionAdapter(private val context: Context, private val list: Lis
         return false
     }
 
+    fun getSections(): List<Section> {
+        return list
+    }
+
     inner class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         private val txtName: TextView = view.findViewById(R.id.sectionDesignName)
         private val txtDate: TextView = view.findViewById(R.id.sectionDesignDate)
+        private val edit: ImageView = view.findViewById(R.id.edit)
 
         fun bind(sectionModel: SectionModel){
             txtName.text = sectionModel.name
             txtDate.text = sectionModel.date
-        }
 
+            edit.setOnClickListener(){
+                val sectionIndex = adapterPosition
+                val itemIndexInSection = 0
+                onItemClickListener.onItemClick(sectionIndex,itemIndexInSection)
+            }
+        }
     }
 
     inner class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -115,7 +133,5 @@ class RecyclerSectionAdapter(private val context: Context, private val list: Lis
             txtHeader.text = header
         }
     }
-
-
 
 }

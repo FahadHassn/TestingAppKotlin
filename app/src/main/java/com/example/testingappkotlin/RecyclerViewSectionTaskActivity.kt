@@ -1,7 +1,6 @@
 package com.example.testingappkotlin
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +21,11 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListener{
+class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var sectionAdapter: RecyclerSectionAdapter
     private var list = mutableListOf<SectionModel>()
-    private var sections = mutableListOf<SectionModel>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,38 +37,42 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
 
         //Recyclerview
         recyclerView = findViewById(R.id.sectionRecyclerview)
-        sectionAdapter = RecyclerSectionAdapter(this,sections,this)
+        sectionAdapter = RecyclerSectionAdapter(this, sections, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = sectionAdapter
 
         //Button Add
         val btnAdd: Button = findViewById(R.id.buttonAdd)
-        btnAdd.setOnClickListener(){
-            showCustomDialog()
+        btnAdd.setOnClickListener() {
+            showAddDialog()
         }
 
+
+        //Sort by name
         val txtName = findViewById<TextView>(R.id.txtSortByName)
-        txtName.setOnClickListener(){
-            sectionAdapter = RecyclerSectionAdapter(this,sortedByFirstLetter(list),this)
+        txtName.setOnClickListener() {
+            sectionAdapter = RecyclerSectionAdapter(this, sortedByFirstLetter(list), this)
             recyclerView.layoutManager = LinearLayoutManager(this)
             recyclerView.adapter = sectionAdapter
 
         }
+
+        //Sort by date
         val txtDate = findViewById<TextView>(R.id.txtSortByDate)
-        txtDate.setOnClickListener(){
-            sectionAdapter = RecyclerSectionAdapter(this, sortedByDate(list),this)
+        txtDate.setOnClickListener() {
+            sectionAdapter = RecyclerSectionAdapter(this, sortedByDate(list), this)
             recyclerView.layoutManager = LinearLayoutManager(this)
             recyclerView.adapter = sectionAdapter
         }
     }
-
-    private fun showCustomDialog() {
-
+    @SuppressLint("MissingInflatedId")
+    private fun showAddDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
         val dialogView = inflater.inflate(R.layout.dialog_box, null)
 
         val editTextName = dialogView.findViewById<EditText>(R.id.customDialogName)
+        val editTextLastName = dialogView.findViewById<EditText>(R.id.customDialogLastName)
         val editTextDate = dialogView.findViewById<TextView>(R.id.customDialogDate)
         val btnSave = dialogView.findViewById<Button>(R.id.customDialogBtnSave)
         val btnCancel = dialogView.findViewById<Button>(R.id.customDialogBtnCancel)
@@ -77,7 +80,7 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
         val calendar = Calendar.getInstance()
 
         editTextDate.setOnClickListener {
-            showDatePicker(calendar,editTextDate)
+            showDatePicker(calendar, editTextDate)
         }
 
         builder.setView(dialogView)
@@ -89,17 +92,17 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
         btnSave.setOnClickListener {
 
             val name = editTextName.text.toString()
+            val lastName = editTextLastName.text.toString()
             val date = editTextDate.text.toString()
 
-            if (name.isEmpty()){
-                Toast.makeText(this,"Please enter name",Toast.LENGTH_SHORT).show()
+            if (name.isEmpty()) {
+                Toast.makeText(this, "Please enter name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
-            else if (date.isEmpty()){
-                Toast.makeText(this,"Please select date",Toast.LENGTH_SHORT).show()
+            } else if (date.isEmpty()) {
+                Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }else{
-                list.add(SectionModel(name, date))
+            } else {
+                list.add(SectionModel(name, date,lastName))
                 sectionAdapter.reloadData(sortedByFirstLetter(list))
 
                 alertDialog.dismiss()
@@ -136,22 +139,14 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
         datePickerDialog.show()
     }
 
-//    override fun onItemClick(position: Int) {
-//        val checkItem = list[position]
-//        println("Position: ${list[position]}")
-//        showEditDialog(checkItem,position)
-//    }
-
-    override fun onItemClick(sectionIndex: Int, itemIndexInSection: Int) {
-        showEditDialog(sectionIndex,itemIndexInSection)
-    }
-
-    private fun showEditDialog(sectionIndex: Int, itemIndexInSection: Int) {
+    @SuppressLint("MissingInflatedId")
+    override fun onEditClicked(sectionModel: SectionModel, name: String, date: String, lastName: String) {
         val builder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
         val dialogView = inflater.inflate(R.layout.dialog_box, null)
 
         val editTextName = dialogView.findViewById<EditText>(R.id.customDialogName)
+        val editTextLastName = dialogView.findViewById<EditText>(R.id.customDialogLastName)
         val editTextDate = dialogView.findViewById<TextView>(R.id.customDialogDate)
         val btnSave = dialogView.findViewById<Button>(R.id.customDialogBtnSave)
         val btnCancel = dialogView.findViewById<Button>(R.id.customDialogBtnCancel)
@@ -159,46 +154,38 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
         val calendar = Calendar.getInstance()
 
         editTextDate.setOnClickListener {
-            showDatePicker(calendar,editTextDate)
+            showDatePicker(calendar, editTextDate)
         }
 
         builder.setView(dialogView)
-        builder.setTitle("Add New Data")
+        builder.setTitle("Edit Data")
         builder.setCancelable(false)
 
         val alertDialog = builder.create()
 
-        val item = list[itemIndexInSection]
-//        val section = sectionAdapter.getSections()[sectionIndex]
-//        val item = section.sections[itemIndexInSection]
-
-        editTextName.setText(item.name)
-        editTextDate.text = item.date
+        editTextName.setText(name)
+        editTextLastName.setText(lastName)
+        editTextDate.text = date
 
         btnSave.setOnClickListener {
-            val name = editTextName.text.toString()
-            val date = editTextDate.text.toString()
+            val newName = editTextName.text.toString()
+            val newLastName = editTextLastName.text.toString()
+            val newDate = editTextDate.text.toString()
 
-            if (name.isEmpty()){
-                Toast.makeText(this,"Please enter name",Toast.LENGTH_SHORT).show()
+            if (newName.isEmpty()) {
+                Toast.makeText(this, "Please enter name", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
-            else if (date.isEmpty()){
-                Toast.makeText(this,"Please select date",Toast.LENGTH_SHORT).show()
+            } else if (newDate.isEmpty()) {
+                Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }else{
-//                list.add(checkItem)
-                item.name = name
-                item.date = date
+            } else {
+                sectionModel.name = newName
+                sectionModel.date = newDate
+                sectionModel.lastName = newLastName
                 sectionAdapter.reloadData(sortedByFirstLetter(list))
-
-//                section.sections[itemIndexInSection].name = name
-//                section.sections[itemIndexInSection].date = date
-//                sectionAdapter.reloadData(sortedByFirstLetter(list))
 
                 alertDialog.dismiss()
             }
-
         }
 
         btnCancel.setOnClickListener {
@@ -208,14 +195,19 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity() , OnItemClickListene
         alertDialog.show()
     }
 
+    override fun onDeleteClicked(sectionModel: SectionModel) {
+        list.remove(sectionModel)
+        sectionAdapter.reloadData(sortedByFirstLetter(list))
+    }
 
-}
     private fun sortedByFirstLetter(list: List<SectionModel>): List<Section> {
         val group = list.groupBy { it.name[0].toUpperCase() }
-        return group.map { (letter, list) -> Section(letter.toString(), list) }.sortedBy { it.title }
+        return group.map { (letter, list) -> Section(letter.toString(), list) }
+            .sortedBy { it.title }
     }
 
     private fun sortedByDate(list: List<SectionModel>): List<Section> {
-            val group = list.groupBy { it.date.toUpperCase() }
-            return group.map { (letter, list) -> Section(letter, list) }.sortedBy { it.title }
+        val group = list.groupBy { it.date.toUpperCase() }
+        return group.map { (letter, list) -> Section(letter, list) }.sortedBy { it.title }
     }
+}

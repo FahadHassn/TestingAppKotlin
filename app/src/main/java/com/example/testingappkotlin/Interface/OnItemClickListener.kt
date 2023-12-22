@@ -1,7 +1,9 @@
 package com.example.testingappkotlin.Interface
 
-interface OnItemClickListener {
+import com.example.testingappkotlin.Modals.SectionModel
 
-    fun onItemClick(sectionIndex: Int, itemIndexInSection: Int)
+interface OnItemClickListener {
+    fun onEditClicked(sectionModel: SectionModel, name: String, date: String, lastName: String)
+    fun onDeleteClicked(sectionModel: SectionModel)
 
 }

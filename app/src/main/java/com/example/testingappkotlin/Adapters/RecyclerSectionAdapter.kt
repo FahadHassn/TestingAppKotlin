@@ -37,7 +37,6 @@ class RecyclerSectionAdapter(private val context: Context, private var list: Lis
 
     override fun getItemCount(): Int {
         return list.sumOf { it.sections.size+1 }
-//        return list.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -104,25 +103,29 @@ class RecyclerSectionAdapter(private val context: Context, private var list: Lis
         return false
     }
 
-    fun getSections(): List<Section> {
-        return list
-    }
-
     inner class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         private val txtName: TextView = view.findViewById(R.id.sectionDesignName)
+        private val txtLastName: TextView = view.findViewById(R.id.sectionDesignLastName)
         private val txtDate: TextView = view.findViewById(R.id.sectionDesignDate)
         private val edit: ImageView = view.findViewById(R.id.edit)
+        private val delete: ImageView = view.findViewById(R.id.delete)
 
         fun bind(sectionModel: SectionModel){
             txtName.text = sectionModel.name
             txtDate.text = sectionModel.date
+            txtLastName.text = sectionModel.lastName
 
             edit.setOnClickListener(){
-                val sectionIndex = adapterPosition
-                val itemIndexInSection = 0
-                onItemClickListener.onItemClick(sectionIndex,itemIndexInSection)
+
+                onItemClickListener.onEditClicked(sectionModel, txtName.text.toString(),txtDate.text.toString(),txtLastName.text.toString())
+
             }
+
+            delete.setOnClickListener(){
+                onItemClickListener.onDeleteClicked(sectionModel)
+            }
+
         }
     }
 

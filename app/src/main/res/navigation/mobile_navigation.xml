@@ -15,11 +15,33 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.testingappkotlin.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_recyclerViewSectionTaskActivity"
+            app:destination="@id/recyclerViewSectionTaskActivity" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_gallery"
+        android:name="com.example.testingappkotlin.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/navigation_slideshow"
+        android:name="com.example.testingappkotlin.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.testingappkotlin.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <activity
+        android:id="@+id/recyclerViewSectionTaskActivity"
+        android:name="com.example.testingappkotlin.RecyclerViewSectionTaskActivity"
+        android:label="activity_recycler_view_section_task"
+        tools:layout="@layout/activity_recycler_view_section_task" />
+
 </navigation>

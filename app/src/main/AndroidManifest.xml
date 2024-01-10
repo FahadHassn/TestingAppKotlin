@@ -13,9 +13,10 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".BottomNavigationActivity"
+            android:name=".DrawerNavigationActivity"
             android:exported="true"
-            android:label="@string/title_activity_bottom_navigation" >
+            android:label="@string/title_activity_drawer_navigation"
+            android:theme="@style/Theme.TestingAppKotlin.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,12 +24,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".BottomNavigationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_bottom_navigation" />
+
+        <activity
             android:name=".RecyclerViewSectionTaskActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".SpinnerTaskActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".RecyclerViewTaskActivity"
             android:exported="true" />

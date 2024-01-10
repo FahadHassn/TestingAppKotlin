@@ -5,26 +5,35 @@
         <!--        <item name="colorPrimary">@color/primary_color</item>-->
 
 
-<!--        <item name="android:background">@color/white</item>-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
-<!--        <item name="android:statusBarColor">@color/white</item>-->
-<!--        <item name="android:buttonTintMode">@color/black</item>-->
-<!--        <item name="android:textColor">@color/black</item>-->
-<!--        <item name="android:textColorHint">@color/black</item>-->
-<!--        <item name="colorPrimary">@color/black</item>-->
-<!--        <item name="colorSecondary">@color/black</item>-->
-<!--        <item name="android:buttonTint">@color/black</item>-->
+        <!--        <item name="android:background">@color/white</item>-->
+        <!--        <item name="android:windowLightStatusBar">true</item>-->
+        <!--        <item name="android:statusBarColor">@color/white</item>-->
+        <!--        <item name="android:buttonTintMode">@color/black</item>-->
+        <!--        <item name="android:textColor">@color/black</item>-->
+        <!--        <item name="android:textColorHint">@color/black</item>-->
+        <!--        <item name="colorPrimary">@color/black</item>-->
+        <!--        <item name="colorSecondary">@color/black</item>-->
+        <!--        <item name="android:buttonTint">@color/black</item>-->
 
 
     </style>
 
     <style name="Theme.TestingAppKotlin" parent="Base.Theme.TestingAppKotlin" />
-    
+
     <style name="ImageCorner" parent="">
 
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
 
     </style>
-    
+
+    <style name="Theme.TestingAppKotlin.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TestingAppKotlin.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TestingAppKotlin.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

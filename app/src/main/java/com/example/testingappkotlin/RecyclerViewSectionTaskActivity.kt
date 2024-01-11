@@ -102,7 +102,7 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
                 Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
-                list.add(SectionModel(name, date,lastName))
+                list.add(SectionModel(name.trim(), date.trim(),lastName.trim()))
                 sectionAdapter.reloadData(sortedByFirstLetter(list))
 
                 alertDialog.dismiss()

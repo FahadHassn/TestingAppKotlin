@@ -38,6 +38,7 @@
         android:name="com.example.testingappkotlin.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
     <activity
         android:id="@+id/recyclerViewSectionTaskActivity"
         android:name="com.example.testingappkotlin.RecyclerViewSectionTaskActivity"

@@ -2,7 +2,6 @@ package com.example.testingappkotlin
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testingappkotlin.databinding.ActivityDrawerNavigationBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DrawerNavigationActivity : AppCompatActivity() {
 
@@ -26,11 +26,12 @@ class DrawerNavigationActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarDrawerNavigation.toolbar)
 
-        binding.appBarDrawerNavigation.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+//        binding.appBarDrawerNavigation.fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.navigation_view)
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_drawer_navigation)
         // Passing each menu ID as a set of Ids because each
@@ -42,6 +43,7 @@ class DrawerNavigationActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        bottomNavigationView.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

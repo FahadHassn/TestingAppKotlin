@@ -1,4 +1,4 @@
-package com.example.testingappkotlin.Intent
+package com.example.testingappkotlin.Activites
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +22,7 @@ class ExplicitIntentActivity : AppCompatActivity() {
                 Toast.makeText(this,"Please enter age",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else{
-                val intent = Intent(this,ImplicitActivity::class.java)
+                val intent = Intent(this, ImplicitActivity::class.java)
                 intent.putExtra("name",binding.edtName.text.toString())
                 startActivity(intent)
                 binding.edtName.setText("")

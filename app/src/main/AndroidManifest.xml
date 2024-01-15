@@ -45,10 +45,10 @@
             android:name=".Activites.RecyclerViewTaskActivity"
             android:exported="true" />
         <activity
-            android:name=".Intent.ImplicitActivity"
+            android:name=".Activites.ImplicitActivity"
             android:exported="false" />
         <activity
-            android:name=".Intent.ExplicitIntentActivity"
+            android:name=".Activites.ExplicitIntentActivity"
             android:exported="true" />
         <activity
             android:name=".Activites.RecyclerviewActivity"

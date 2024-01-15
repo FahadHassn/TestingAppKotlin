@@ -1,4 +1,4 @@
-package com.example.testingappkotlin.Intent
+package com.example.testingappkotlin.Activites
 
 import android.content.ActivityNotFoundException
 import android.content.Intent

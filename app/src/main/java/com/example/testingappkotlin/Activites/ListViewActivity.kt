@@ -1,10 +1,11 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testingappkotlin.Adapters.ListViewAdapter
 import com.example.testingappkotlin.Modals.ItemViewModal
+import com.example.testingappkotlin.R
 
 class ListViewActivity : AppCompatActivity() {
 

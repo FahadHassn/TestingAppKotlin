@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingappkotlin.Adapters.RecyclerviewAdapter
 import com.example.testingappkotlin.Modals.ItemViewModal
+import com.example.testingappkotlin.R
 
 class RecyclerviewActivity : AppCompatActivity() {
 

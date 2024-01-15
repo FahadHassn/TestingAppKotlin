@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -16,6 +16,7 @@ import com.example.testingappkotlin.Adapters.RecyclerSectionAdapter
 import com.example.testingappkotlin.Interface.OnItemClickListener
 import com.example.testingappkotlin.Modals.Section
 import com.example.testingappkotlin.Modals.SectionModel
+import com.example.testingappkotlin.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

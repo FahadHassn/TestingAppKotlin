@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testingappkotlin.R
 import com.example.testingappkotlin.databinding.ActivityDrawerNavigationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -38,7 +39,11 @@ class DrawerNavigationActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_gallery, R.id.navigation_slideshow, R.id.navigation_notifications
+                R.id.navigation_home,
+                R.id.navigation_dashboard,
+                R.id.navigation_gallery,
+                R.id.navigation_slideshow,
+                R.id.navigation_notifications
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

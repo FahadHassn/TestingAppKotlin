@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testingappkotlin.R
 
 class MainActivity : AppCompatActivity() , AdapterView.OnItemSelectedListener {
 

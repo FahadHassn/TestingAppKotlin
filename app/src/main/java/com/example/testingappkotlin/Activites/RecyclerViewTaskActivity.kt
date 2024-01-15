@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingappkotlin.Adapters.RecyclerViewTaskAdapter
 import com.example.testingappkotlin.Modals.RecyclerViewTaskModal
+import com.example.testingappkotlin.R
 import java.util.Locale
 
 class RecyclerViewTaskActivity : AppCompatActivity() {
@@ -24,10 +25,28 @@ class RecyclerViewTaskActivity : AppCompatActivity() {
         list = arrayListOf()
         list.add(RecyclerViewTaskModal("Fahad","qwertyuioplk","12:00 pm",true, arrayListOf(R.drawable.img)))
         list.add(RecyclerViewTaskModal("Ali","qwertyuioplk","12:00 pm",false,null))
-        list.add(RecyclerViewTaskModal("Hassan","qwertyuioplk","12:00 pm",true, arrayListOf(R.drawable.img,R.drawable.img,R.drawable.img)))
-        list.add(RecyclerViewTaskModal("Umer","qwertyuioplk","12:00 pm",false, arrayListOf(R.drawable.img,R.drawable.img)))
-        list.add(RecyclerViewTaskModal("Hamza","qwertyuioplk","12:00 pm",false, arrayListOf(R.drawable.img,R.drawable.img,R.drawable.img,R.drawable.img)))
-        list.add(RecyclerViewTaskModal("Bilal","qwertyuioplk","12:00 pm",true, arrayListOf(R.drawable.img,R.drawable.img,R.drawable.img,R.drawable.img,R.drawable.img)))
+        list.add(RecyclerViewTaskModal("Hassan","qwertyuioplk","12:00 pm",true, arrayListOf(
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img
+        )))
+        list.add(RecyclerViewTaskModal("Umer","qwertyuioplk","12:00 pm",false, arrayListOf(
+            R.drawable.img,
+            R.drawable.img
+        )))
+        list.add(RecyclerViewTaskModal("Hamza","qwertyuioplk","12:00 pm",false, arrayListOf(
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img
+        )))
+        list.add(RecyclerViewTaskModal("Bilal","qwertyuioplk","12:00 pm",true, arrayListOf(
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img,
+            R.drawable.img
+        )))
 
         recyclerView = findViewById(R.id.taskRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)

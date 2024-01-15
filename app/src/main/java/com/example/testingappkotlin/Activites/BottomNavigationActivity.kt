@@ -1,9 +1,10 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.testingappkotlin.R
 import com.example.testingappkotlin.databinding.ActivityBottomNavigationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

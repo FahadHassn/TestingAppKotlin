@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.Activites
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.testingappkotlin.R
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -187,14 +188,20 @@ class RelativeTaskActivity : AppCompatActivity() {
 
     private fun enableTrue(){
         button.isEnabled = true
-        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.black)
+        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity,
+            R.color.black
+        )
         button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.white))
     }
 
     private fun enableFalse(){
         button.isEnabled = false
-        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity, R.color.buttonColor)
-        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity, R.color.buttonTextColor))
+        button.backgroundTintList = ContextCompat.getColorStateList(this@RelativeTaskActivity,
+            R.color.buttonColor
+        )
+        button.setTextColor(ContextCompat.getColor(this@RelativeTaskActivity,
+            R.color.buttonTextColor
+        ))
     }
 
 }

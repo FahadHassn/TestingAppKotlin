@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="15dp"
-    tools:context=".RelativeTaskActivity">
+    tools:context=".Activites.RelativeTaskActivity">
 
     <TextView
         android:id="@+id/_txtSignIn"

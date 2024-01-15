@@ -17,10 +17,8 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".DrawerNavigationActivity"
-            android:exported="true"
-            android:label="@string/title_activity_drawer_navigation"
-            android:theme="@style/Theme.TestingAppKotlin.NoActionBar" >
+            android:name=".Activites.DependencyInjectionActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,18 +26,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BottomNavigationActivity"
+            android:name=".Activites.DrawerNavigationActivity"
             android:exported="true"
-            android:label="@string/title_activity_bottom_navigation" />
+            android:label="@string/title_activity_drawer_navigation"
+            android:theme="@style/Theme.TestingAppKotlin.NoActionBar" />
 
         <activity
-            android:name=".RecyclerViewSectionTaskActivity"
-            android:exported="true"/>
+            android:name=".Activites.BottomNavigationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_bottom_navigation" />
         <activity
-            android:name=".SpinnerTaskActivity"
+            android:name=".Activites.RecyclerViewSectionTaskActivity"
             android:exported="true" />
         <activity
-            android:name=".RecyclerViewTaskActivity"
+            android:name=".Activites.SpinnerTaskActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activites.RecyclerViewTaskActivity"
             android:exported="true" />
         <activity
             android:name=".Intent.ImplicitActivity"
@@ -48,28 +51,28 @@
             android:name=".Intent.ExplicitIntentActivity"
             android:exported="true" />
         <activity
-            android:name=".RecyclerviewActivity"
+            android:name=".Activites.RecyclerviewActivity"
             android:exported="true" />
         <activity
-            android:name=".ConstraintTaskActivity"
+            android:name=".Activites.ConstraintTaskActivity"
             android:exported="true" />
         <activity
-            android:name=".RelativeTaskActivity"
+            android:name=".Activites.RelativeTaskActivity"
             android:exported="true" />
         <activity
-            android:name=".LinearTaskActivity"
+            android:name=".Activites.LinearTaskActivity"
             android:exported="true" />
         <activity
-            android:name=".ListViewActivity"
+            android:name=".Activites.ListViewActivity"
             android:exported="true" />
         <activity
-            android:name=".ProgrammaticallyConstraintActivity"
+            android:name=".Activites.ProgrammaticallyConstraintActivity"
             android:exported="true" />
         <activity
-            android:name=".ConstraintActivity"
+            android:name=".Activites.ConstraintActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activites.MainActivity"
             android:exported="true" />
     </application>
 

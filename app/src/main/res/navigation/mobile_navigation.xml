@@ -41,7 +41,7 @@
 
     <activity
         android:id="@+id/recyclerViewSectionTaskActivity"
-        android:name="com.example.testingappkotlin.Activites.RecyclerViewSectionTaskActivity"
+        android:name="com.example.testingappkotlin.activities.RecyclerViewSectionTaskActivity"
         android:label="activity_recycler_view_section_task"
         tools:layout="@layout/activity_recycler_view_section_task" />
 

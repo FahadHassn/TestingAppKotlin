@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".Activites.LinearTaskActivity">
+    tools:context=".activities.LinearTaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

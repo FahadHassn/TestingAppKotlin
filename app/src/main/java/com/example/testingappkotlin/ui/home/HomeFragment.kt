@@ -1,5 +1,7 @@
 package com.example.testingappkotlin.ui.home
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.testingappkotlin.activities.SharedPreferencesActivity
 import com.example.testingappkotlin.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +36,23 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+
+        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
+        val email = sharedPref?.getString("email",null)
+        val password = sharedPref?.getString("password",null)
+
+        binding.homeEmailText.text = email
+        binding.homePasswordText.text = password
+
+        binding.button5.setOnClickListener{
+            editor?.putBoolean("state", false)
+            editor?.apply()
+            startActivity(Intent(context, SharedPreferencesActivity::class.java))
+            requireActivity().finish()
+        }
+
         return root
     }
 

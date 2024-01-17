@@ -52,6 +52,6 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.karumi:dexter:6.2.3")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation("com.google.dagger:dagger:2.41")
-    kapt("com.google.dagger:dagger-compiler:2.41")
+    implementation("com.google.dagger:dagger:2.20")
+    kapt("com.google.dagger:dagger-compiler:2.20")
 }

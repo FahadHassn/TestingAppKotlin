@@ -16,7 +16,10 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31" >
         <activity
-            android:name=".activities.SharedPreferencesActivity"
+            android:name=".activities.SharedPreferencesSignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SharedPreferencesLoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

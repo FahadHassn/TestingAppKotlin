@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SharedPreferencesActivity">
+    tools:context=".activities.SharedPreferencesLoginActivity">
 
   <TextView
       android:id="@+id/loginText"
@@ -73,6 +73,19 @@
       android:drawableLeft="@drawable/baseline_arrow_right_alt_24"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+  <TextView
+      android:id="@+id/signUpText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:paddingHorizontal="16dp"
+      android:text="Create account"
+      android:textSize="18sp"
+      android:textAlignment="center"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/sharedButton" />
 
   <androidx.constraintlayout.widget.Guideline
       android:id="@+id/guideline1"

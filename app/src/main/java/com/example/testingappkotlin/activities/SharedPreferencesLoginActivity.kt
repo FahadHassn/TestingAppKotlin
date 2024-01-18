@@ -5,13 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.testingappkotlin.R
-import com.example.testingappkotlin.databinding.ActivitySharedPreferencesBinding
+import com.example.testingappkotlin.databinding.ActivitySharedPreferencesLoginBinding
 
-class SharedPreferencesActivity : AppCompatActivity() {
+class SharedPreferencesLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivitySharedPreferencesBinding.inflate(layoutInflater)
+        val binding = ActivitySharedPreferencesLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val sharedPref = getSharedPreferences("myPref", Context.MODE_PRIVATE)
@@ -28,6 +27,8 @@ class SharedPreferencesActivity : AppCompatActivity() {
 
                 val email = binding.emailEditText.text.toString()
                 val password = binding.passwordEditText.text.toString()
+                val registerEmail = sharedPref.getString("email",null)
+                val registerPassword = sharedPref.getString("password",null)
 
                 if (email.isEmpty()){
                     Toast.makeText(this,"Enter email",Toast.LENGTH_SHORT).show()
@@ -35,17 +36,22 @@ class SharedPreferencesActivity : AppCompatActivity() {
                 }else if (password.isEmpty()){
                     Toast.makeText(this,"Enter password",Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
+                }else if (email == registerEmail && password == registerPassword){
+                    editor.putBoolean("state",true).apply()
+                    startActivity(intent)
+                    finish()
                 }else{
-                    editor.apply {
-                        putString("email",email)
-                        putString("password",password)
-                        putBoolean("state",true)
-                        apply()
-                        startActivity(intent)
-                        finish()
-                    }
+                    Toast.makeText(this,"Invalid email or password",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
             }
         }
+
+        binding.signUpText.setOnClickListener {
+            val i = Intent(this,SharedPreferencesSignupActivity::class.java)
+            startActivity(i)
+            finish()
+        }
+
     }
 }

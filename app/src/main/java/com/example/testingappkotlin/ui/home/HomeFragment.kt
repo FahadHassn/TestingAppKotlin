@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.testingappkotlin.activities.SharedPreferencesActivity
+import com.example.testingappkotlin.activities.SharedPreferencesLoginActivity
 import com.example.testingappkotlin.databinding.FragmentHomeBinding
 
 
@@ -40,16 +40,18 @@ class HomeFragment : Fragment() {
 
         val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
+        val name = sharedPref?.getString("name",null)
         val email = sharedPref?.getString("email",null)
         val password = sharedPref?.getString("password",null)
 
+        binding.homeNameText.text = name
         binding.homeEmailText.text = email
         binding.homePasswordText.text = password
 
         binding.button5.setOnClickListener{
             editor?.putBoolean("state", false)
             editor?.apply()
-            startActivity(Intent(context, SharedPreferencesActivity::class.java))
+            startActivity(Intent(context, SharedPreferencesLoginActivity::class.java))
             requireActivity().finish()
         }
 

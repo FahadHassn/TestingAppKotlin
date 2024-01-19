@@ -1,5 +1,6 @@
 package com.example.testingappkotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -42,5 +43,17 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                     }
             }
         }
+
+        binding.firebaseRegisterLoginText.setOnClickListener {
+            startActivity(Intent(this,FirebaseLoginActivity::class.java))
+            finish()
+        }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,FirebaseLoginActivity::class.java))
+        finish()
     }
 }

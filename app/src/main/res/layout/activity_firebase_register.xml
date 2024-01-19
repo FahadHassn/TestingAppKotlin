@@ -117,11 +117,12 @@
         app:layout_constraintTop_toBottomOf="@+id/firebase_register_button" />
 
     <TextView
+        android:id="@+id/firebase_register_login_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Login"
         android:textAlignment="textStart"
-        android:textColorHint="?attr/actionModeSplitBackground"
+        android:textColor="?attr/actionModeSplitBackground"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
+            android:name=".OTPActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LoginWithPhoneActivity"
             android:exported="false" />
         <activity

@@ -1,10 +1,12 @@
 package com.example.testingappkotlin.activities
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testingappkotlin.OTPActivity
 import com.example.testingappkotlin.databinding.ActivityLoginWithPhoneBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -12,12 +14,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import java.util.concurrent.TimeUnit
 
 class LoginWithPhoneActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var verificationCode: String
+    private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +69,13 @@ class LoginWithPhoneActivity : AppCompatActivity() {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken,
             ) {
+
+                verificationCode = verificationId
+                forceResendingToken = token
+
+                val intent = Intent(this@LoginWithPhoneActivity,OTPActivity::class.java)
+                intent.putExtra("opt",verificationCode)
+                startActivity(intent)
                 Toast.makeText(
                     this@LoginWithPhoneActivity,
                     "Code Sent",

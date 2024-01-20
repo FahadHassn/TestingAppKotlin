@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginWithPhoneActivity">
+    tools:context=".OTPActivity">
 
     <TextView
-        android:id="@+id/login_phone_text"
+        android:id="@+id/verify_otp_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:text="Login With Phone"
+        android:text="Verify OTP"
         android:textAlignment="center"
         android:textColor="?attr/actionModeSplitBackground"
         android:textSize="30sp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_phone"
+        android:id="@+id/otp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -31,28 +31,27 @@
         app:hintTextColor="#7E7E7E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_phone_text">
+        app:layout_constraintTop_toBottomOf="@+id/verify_otp_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/firebase_login_phone"
+            android:id="@+id/otp_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/baseline_call_24"
             android:drawablePadding="10dp"
             android:inputType="phone"
             android:drawableTint="#7E7E7E"
-            android:hint="Enter phone number" />
+            android:hint="Enter OTP" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/firebase_login_phone_button"
+        android:id="@+id/otp_verify_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Verify"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/otp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

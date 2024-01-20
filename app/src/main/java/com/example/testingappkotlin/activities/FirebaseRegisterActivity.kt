@@ -2,14 +2,22 @@ package com.example.testingappkotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testingappkotlin.databinding.ActivityFirebaseRegisterBinding
+import com.example.testingappkotlin.modals.UserLoginModal
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
+
 
 class FirebaseRegisterActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,25 +25,43 @@ class FirebaseRegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        databaseReference = Firebase.database.reference
 
         binding.firebaseRegisterButton.setOnClickListener {
 
             val name = binding.firebaseRegisterName.text.toString().trim()
             val email = binding.firebaseRegisterEmail.text.toString().trim()
+            val phone = binding.firebaseRegisterPhone.text.toString().trim()
             val password = binding.firebaseRegisterPassword.text.toString().trim()
 
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty()){
-                Toast.makeText(this@FirebaseRegisterActivity, "Enter credentials", Toast.LENGTH_SHORT).show()
+            if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()){
+                Toast.makeText(this@FirebaseRegisterActivity, "Fill all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }else{
+                binding.registerProgress.visibility = View.VISIBLE
                 firebaseAuth.createUserWithEmailAndPassword(email,password)
                     .addOnSuccessListener {
-                        Toast.makeText(
-                            this@FirebaseRegisterActivity,
-                            "Register Successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val id: String? = it.user?.uid
+                        val loginModal = UserLoginModal(name, email, phone, password, id)
+                        if (id != null) {
+                            databaseReference.child("Users").child(id).setValue(loginModal).addOnSuccessListener {
+                                binding.registerProgress.visibility = View.GONE
+                                Toast.makeText(
+                                    this@FirebaseRegisterActivity,
+                                    "Register Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                startActivity(Intent(this,BottomNavigationActivity::class.java))
+                            }.addOnFailureListener {
+                                binding.registerProgress.visibility = View.GONE
+                                Toast.makeText(this@FirebaseRegisterActivity,
+                                    "User data not stored in database",
+                                    Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
                     }  .addOnFailureListener {
+                        binding.registerProgress.visibility = View.GONE
                         Toast.makeText(this@FirebaseRegisterActivity,
                             "Registration Failed",
                             Toast.LENGTH_SHORT)

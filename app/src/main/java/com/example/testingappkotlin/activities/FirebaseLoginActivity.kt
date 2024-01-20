@@ -40,6 +40,7 @@ class FirebaseLoginActivity : AppCompatActivity() {
                 }else {
                     firebaseAuth.signInWithEmailAndPassword(email,password)
                         .addOnSuccessListener {
+                            startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
                             Toast.makeText(
                                 this@FirebaseLoginActivity,
                                 "Login Successfully",

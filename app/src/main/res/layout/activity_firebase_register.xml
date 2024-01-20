@@ -40,6 +40,7 @@
             android:drawableStart="@drawable/baseline_person_24"
             android:drawablePadding="10dp"
             android:drawableTint="#7E7E7E"
+            android:inputType="textPersonName"
             android:hint="Name" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +70,31 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        app:boxStrokeColor="#7E7E7E"
+        app:cursorColor="#7E7E7E"
+        app:hintTextColor="#7E7E7E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firebase_register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/baseline_call_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="#7E7E7E"
+            android:hint="Phone number"
+            android:inputType="phone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -79,7 +105,7 @@
         app:hintTextColor="#7E7E7E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_phone"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -137,5 +163,17 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".7"
         app:layout_constraintGuide_begin="20dp" />
+
+    <ProgressBar
+        android:id="@+id/register_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/actionModeSplitBackground"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "6920206593",
+    "firebase_url": "https://testingappkotlin-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "testingappkotlin",
     "storage_bucket": "testingappkotlin.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.testingappkotlin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "6920206593-4on3fn12pe5j2sgoog9cr9trfnf87a6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.testingappkotlin",
+            "certificate_hash": "084a1c88b07f2f4864ec4c1c97c0cc4df424cf4d"
+          }
+        },
+        {
+          "client_id": "6920206593-vsau1jf8q2ed7j1qvo13bhthcsrtvsp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCcZEdp2BqTe-X-4vjUsLRsOk7PWjalsVI"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6920206593-vsau1jf8q2ed7j1qvo13bhthcsrtvsp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

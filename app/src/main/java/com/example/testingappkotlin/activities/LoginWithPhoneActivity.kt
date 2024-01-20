@@ -1,20 +1,21 @@
 package com.example.testingappkotlin.activities
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.testingappkotlin.OTPActivity
 import com.example.testingappkotlin.databinding.ActivityLoginWithPhoneBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import java.util.concurrent.TimeUnit
 
 class LoginWithPhoneActivity : AppCompatActivity() {
@@ -23,6 +24,8 @@ class LoginWithPhoneActivity : AppCompatActivity() {
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private lateinit var verificationCode: String
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
+    private lateinit var gso: GoogleSignInOptions
+    private lateinit var gsc: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +34,15 @@ class LoginWithPhoneActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        //session maintain
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+        if (googleSignInAccount != null){
+            homeActivity()
+        }
+
         binding.apply {
 
+            //login with phone
             firebaseLoginPhoneButton.setOnClickListener {
                 val phone = "+92" + firebaseLoginPhone.text?.trim().toString()
                 if (phone.isEmpty()){
@@ -46,8 +56,37 @@ class LoginWithPhoneActivity : AppCompatActivity() {
                 }
             }
 
+            //login with google
+            googleButton.setOnClickListener {
+                googleLogin()
+            }
+
         }
 
+    }
+
+    private fun googleLogin() {
+        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        gsc = GoogleSignIn.getClient(this,gso)
+        val intent = gsc.signInIntent
+        startActivityForResult(intent,1000)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                task.getResult(ApiException::class.java)
+                homeActivity()
+            }catch (e: ApiException){
+                Toast.makeText(
+                    this,
+                    "Something went wrong",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun otpSend(phone: String) {
@@ -73,7 +112,7 @@ class LoginWithPhoneActivity : AppCompatActivity() {
                 verificationCode = verificationId
                 forceResendingToken = token
 
-                val intent = Intent(this@LoginWithPhoneActivity,OTPActivity::class.java)
+                val intent = Intent(this@LoginWithPhoneActivity, OTPActivity::class.java)
                 intent.putExtra("opt",verificationCode)
                 startActivity(intent)
                 Toast.makeText(
@@ -111,5 +150,10 @@ class LoginWithPhoneActivity : AppCompatActivity() {
                     // Update UI
                 }
             }
+    }
+
+    private fun homeActivity() {
+        startActivity(Intent(this,HomeActivity::class.java))
+        finish()
     }
 }

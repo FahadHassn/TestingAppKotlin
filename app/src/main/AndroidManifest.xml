@@ -18,11 +18,20 @@
         android:theme="@style/Theme.TestingAppKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".OTPActivity"
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OTPActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginWithPhoneActivity"
-            android:exported="false" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.ForgetPasswordActivity"
             android:exported="false" />
@@ -31,13 +40,7 @@
             android:exported="true" />
         <activity
             android:name=".activities.FirebaseLoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".activities.SharedPreferencesSignupActivity"
             android:exported="false" />

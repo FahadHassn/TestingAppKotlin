@@ -1,4 +1,4 @@
-package com.example.testingappkotlin
+package com.example.testingappkotlin.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

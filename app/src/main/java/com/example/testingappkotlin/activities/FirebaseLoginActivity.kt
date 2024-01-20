@@ -38,21 +38,22 @@ class FirebaseLoginActivity : AppCompatActivity() {
                     ).show()
                     return@setOnClickListener
                 }else {
-                    firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
-                        Toast.makeText(
-                            this@FirebaseLoginActivity,
-                            "Login Successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        firebaseLoginEmail.setText("")
-                        firebaseLoginPassword.setText("")
-                    }.addOnFailureListener {
-                        Toast.makeText(
-                            this@FirebaseLoginActivity,
-                            "Something went wrong",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    firebaseAuth.signInWithEmailAndPassword(email,password)
+                        .addOnSuccessListener {
+                            Toast.makeText(
+                                this@FirebaseLoginActivity,
+                                "Login Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            firebaseLoginEmail.setText("")
+                            firebaseLoginPassword.setText("")
+                        }.addOnFailureListener {
+                            Toast.makeText(
+                                this@FirebaseLoginActivity,
+                                "Something went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
             }
 

@@ -40,9 +40,9 @@ class HomeFragment : Fragment() {
 
         val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
-        val name = sharedPref?.getString("name",null)
-        val email = sharedPref?.getString("email",null)
-        val password = sharedPref?.getString("password",null)
+        val name = sharedPref?.getString("name",null) ?: "Someone"
+        val email = sharedPref?.getString("email",null) ?: "someone@gmail.com"
+        val password = sharedPref?.getString("password",null) ?: "......"
 
         binding.homeNameText.text = name
         binding.homeEmailText.text = email

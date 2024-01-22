@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testingappkotlin.modals.RecyclerViewTaskModal
+import com.example.testingappkotlin.models.RecyclerViewTaskModel
 import com.example.testingappkotlin.R
 import java.util.Locale
 
-class RecyclerViewTaskAdapter(val context: Context, private var list: List<RecyclerViewTaskModal>) : RecyclerView.Adapter<RecyclerViewTaskAdapter.SingleImageViewHolder>(){
+class RecyclerViewTaskAdapter(val context: Context, private var list: List<RecyclerViewTaskModel>) : RecyclerView.Adapter<RecyclerViewTaskAdapter.SingleImageViewHolder>(){
 
-    fun setFilteredList(modelList: List<RecyclerViewTaskModal>){
+    fun setFilteredList(modelList: List<RecyclerViewTaskModel>){
         this.list = modelList
         notifyDataSetChanged()
     }
@@ -33,7 +33,7 @@ class RecyclerViewTaskAdapter(val context: Context, private var list: List<Recyc
         private val tripleImage4: ImageView = itemView.findViewById(R.id.tripleImage4)
         private val tripleImage5: ImageView = itemView.findViewById(R.id.tripleImage5)
 
-        fun bind(model: RecyclerViewTaskModal) {
+        fun bind(model: RecyclerViewTaskModel) {
 
 
             if (!model.image.isNullOrEmpty()) {

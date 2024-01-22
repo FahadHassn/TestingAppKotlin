@@ -6,11 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testingappkotlin.databinding.ActivityFirebaseRegisterBinding
-import com.example.testingappkotlin.modals.UserLoginModal
+import com.example.testingappkotlin.models.UserLoginModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
 
@@ -42,7 +41,7 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                 firebaseAuth.createUserWithEmailAndPassword(email,password)
                     .addOnSuccessListener {
                         val id: String? = it.user?.uid
-                        val loginModal = UserLoginModal(name, email, phone, password, id)
+                        val loginModal = UserLoginModel(name, email, phone, password, id)
                         if (id != null) {
                             databaseReference.child("Users").child(id).setValue(loginModal).addOnSuccessListener {
                                 binding.registerProgress.visibility = View.GONE
@@ -52,6 +51,7 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 startActivity(Intent(this,BottomNavigationActivity::class.java))
+                                finish()
                             }.addOnFailureListener {
                                 binding.registerProgress.visibility = View.GONE
                                 Toast.makeText(this@FirebaseRegisterActivity,

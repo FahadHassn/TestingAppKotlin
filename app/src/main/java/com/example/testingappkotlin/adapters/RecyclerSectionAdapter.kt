@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingappkotlin.interfaces.OnItemClickListener
-import com.example.testingappkotlin.modals.Section
-import com.example.testingappkotlin.modals.SectionModel
+import com.example.testingappkotlin.models.Section
+import com.example.testingappkotlin.models.SectionModel
 import com.example.testingappkotlin.R
 
 class RecyclerSectionAdapter(private val context: Context, private var list: List<Section>, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){

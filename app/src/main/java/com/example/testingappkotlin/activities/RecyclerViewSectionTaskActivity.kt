@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingappkotlin.adapters.RecyclerSectionAdapter
 import com.example.testingappkotlin.interfaces.OnItemClickListener
-import com.example.testingappkotlin.modals.Section
-import com.example.testingappkotlin.modals.SectionModel
+import com.example.testingappkotlin.models.Section
+import com.example.testingappkotlin.models.SectionModel
 import com.example.testingappkotlin.R
 import java.text.SimpleDateFormat
 import java.util.Calendar

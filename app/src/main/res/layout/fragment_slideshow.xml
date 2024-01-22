@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_password" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_update_button" />
 
     <TextView
         android:id="@+id/profile"
@@ -33,14 +33,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/profile_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:drawableStart="@drawable/baseline_person_24"
         android:text="Name"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:padding="16dp"
         android:textSize="18sp"
         android:gravity="center_vertical"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile" />
 
-    <TextView
+    <EditText
         android:id="@+id/profile_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
-    <TextView
+    <EditText
         android:id="@+id/profile_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,20 +81,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_email" />
 
-    <TextView
-        android:id="@+id/profile_password"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/profile_update_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:drawableStart="@drawable/baseline_key_24"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:layout_marginTop="10dp"
-        android:text="Password"
-        android:textSize="18sp"
+        android:layout_marginTop="70dp"
+        android:text="Update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_phone" />
+
+    <ProgressBar
+        android:id="@+id/profile_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/actionModeSplitBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_delete_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:textColor="@color/red"
+        android:text="Delete Account"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_update_button" />
+
+    <TextView
+        android:id="@+id/profile_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="end"
+        android:text="Logout"
+        android:textColor="?attr/actionModeSplitBackground"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,57 +21,65 @@ class FirebaseLoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
 
-        binding.apply {
+        if (currentUser != null){
+            startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
+            finish()
+        }else {
+            binding.apply {
 
-            //Login
-            firebaseLoginButton.setOnClickListener {
+                //Login
+                firebaseLoginButton.setOnClickListener {
 
-                val email = binding.firebaseLoginEmail.text.toString().trim()
-                val password = binding.firebaseLoginPassword.text.toString().trim()
+                    val email = binding.firebaseLoginEmail.text.toString().trim()
+                    val password = binding.firebaseLoginPassword.text.toString().trim()
 
-                if (email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(
-                        this@FirebaseLoginActivity,
-                        "Enter credentials",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }else {
-                    firebaseAuth.signInWithEmailAndPassword(email,password)
-                        .addOnSuccessListener {
-                            startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
-                            Toast.makeText(
-                                this@FirebaseLoginActivity,
-                                "Login Successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            firebaseLoginEmail.setText("")
-                            firebaseLoginPassword.setText("")
-                        }.addOnFailureListener {
-                            Toast.makeText(
-                                this@FirebaseLoginActivity,
-                                "Something went wrong",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    if (email.isEmpty() || password.isEmpty()){
+                        Toast.makeText(
+                            this@FirebaseLoginActivity,
+                            "Enter credentials",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }else {
+                        binding.loginProgress.visibility = View.VISIBLE
+                        firebaseAuth.signInWithEmailAndPassword(email,password)
+                            .addOnSuccessListener {
+                                startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
+                                finish()
+                                binding.loginProgress.visibility = View.GONE
+                                Toast.makeText(
+                                    this@FirebaseLoginActivity,
+                                    "Login Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }.addOnFailureListener {
+                                binding.loginProgress.visibility = View.GONE
+                                Toast.makeText(
+                                    this@FirebaseLoginActivity,
+                                    "Something went wrong",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
                 }
-            }
 
-            //start register activity
-            firebaseLoginCreateAccount.setOnClickListener {
-                startActivity(Intent(this@FirebaseLoginActivity,FirebaseRegisterActivity::class.java))
-                finish()
-            }
+                //start register activity
+                firebaseLoginCreateAccount.setOnClickListener {
+                    startActivity(Intent(this@FirebaseLoginActivity,FirebaseRegisterActivity::class.java))
+                    finish()
+                }
 
-            //forget password
-            firebaseLoginForgetPassword.setOnClickListener {
-                startActivity(Intent(this@FirebaseLoginActivity,ForgetPasswordActivity::class.java))
-            }
+                //forget password
+                firebaseLoginForgetPassword.setOnClickListener {
+                    startActivity(Intent(this@FirebaseLoginActivity,ForgetPasswordActivity::class.java))
+                }
 
-            //login with phone
-            firebaseLoginWithNumber.setOnClickListener {
-                startActivity(Intent(this@FirebaseLoginActivity,LoginWithPhoneActivity::class.java))
+                //login with phone
+                firebaseLoginWithNumber.setOnClickListener {
+                    startActivity(Intent(this@FirebaseLoginActivity,LoginWithPhoneActivity::class.java))
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
-package com.example.testingappkotlin.modals
+package com.example.testingappkotlin.models
 
-data class RecyclerViewTaskModal(
+data class RecyclerViewTaskModel(
     val name: String,
     val message: String,
     val time: String,

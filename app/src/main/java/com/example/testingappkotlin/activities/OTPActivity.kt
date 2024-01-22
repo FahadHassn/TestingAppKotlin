@@ -11,12 +11,10 @@ class OTPActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val intent = intent
-        val otpCode = intent.getStringExtra("opt")?.toInt()
+        val otpCode = intent.getStringExtra("opt")
 
         binding.apply {
-            if (otpCode != null) {
-                otpEditText.setText(otpCode)
-            }
+            otpEditText.setText(otpCode)
         }
 
     }

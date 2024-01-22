@@ -8,10 +8,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testingappkotlin.modals.ItemViewModal
+import com.example.testingappkotlin.models.ItemViewModel
 import com.example.testingappkotlin.R
 
-class RecyclerviewAdapter(val context: Context, private val list: List<ItemViewModal>): RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>() {
+class RecyclerviewAdapter(val context: Context, private val list: List<ItemViewModel>): RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 

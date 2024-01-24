@@ -24,7 +24,7 @@ class FirebaseLoginActivity : AppCompatActivity() {
         val currentUser = firebaseAuth.currentUser
 
         if (currentUser != null){
-            startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
+            startActivity(Intent(this@FirebaseLoginActivity,DrawerNavigationActivity::class.java))
             finish()
         }else {
             binding.apply {
@@ -46,7 +46,7 @@ class FirebaseLoginActivity : AppCompatActivity() {
                         binding.loginProgress.visibility = View.VISIBLE
                         firebaseAuth.signInWithEmailAndPassword(email,password)
                             .addOnSuccessListener {
-                                startActivity(Intent(this@FirebaseLoginActivity,BottomNavigationActivity::class.java))
+                                startActivity(Intent(this@FirebaseLoginActivity,DrawerNavigationActivity::class.java))
                                 finish()
                                 binding.loginProgress.visibility = View.GONE
                                 Toast.makeText(

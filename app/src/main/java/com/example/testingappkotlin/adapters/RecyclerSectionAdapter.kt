@@ -1,5 +1,6 @@
 package com.example.testingappkotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -14,23 +15,24 @@ import com.example.testingappkotlin.R
 
 class RecyclerSectionAdapter(private val context: Context, private var list: List<Section>, private val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    private val ITEM_VIEW_TYPE_HEADER = 0
-    private val ITEM_VIEW_TYPE_ITEM = 1
+    private val itemViewTypeHeader = 0
+    private val itemViewTypeItem = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_HEADER -> {
+            itemViewTypeHeader -> {
                 val itemView = LayoutInflater.from(context).inflate(R.layout.recyclerview_section_header_design, parent, false)
                 SectionHeaderViewHolder(itemView)
             }
-            ITEM_VIEW_TYPE_ITEM -> {
+            itemViewTypeItem -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.recyclerview_section_design, parent, false)
                 SectionViewHolder(view,)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
-    fun reloadData( lists: List<Section>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun reloadData(lists: List<Section>){
         this.list= lists
         notifyDataSetChanged()
     }
@@ -41,15 +43,15 @@ class RecyclerSectionAdapter(private val context: Context, private var list: Lis
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            ITEM_VIEW_TYPE_HEADER -> {
+            itemViewTypeHeader -> {
                 val sectionHeaderViewHolder = holder as SectionHeaderViewHolder
                 val sectionHeader = getSectionForPosition(position)
                 sectionHeaderViewHolder.bind(sectionHeader.title)
             }
-            ITEM_VIEW_TYPE_ITEM -> {
+            itemViewTypeItem -> {
                 val sectionViewHolder = holder as SectionViewHolder
                 val sectionItem = getItem(position)
-                sectionViewHolder.bind(sectionItem)
+                sectionViewHolder.bind(sectionItem,position)
             }
         }
 
@@ -89,7 +91,7 @@ class RecyclerSectionAdapter(private val context: Context, private var list: Lis
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isSectionHeader(position)) ITEM_VIEW_TYPE_HEADER else ITEM_VIEW_TYPE_ITEM
+        return if (isSectionHeader(position)) itemViewTypeHeader else itemViewTypeItem
     }
 
     private fun isSectionHeader(position: Int): Boolean {
@@ -111,15 +113,13 @@ class RecyclerSectionAdapter(private val context: Context, private var list: Lis
         private val edit: ImageView = view.findViewById(R.id.edit)
         private val delete: ImageView = view.findViewById(R.id.delete)
 
-        fun bind(sectionModel: SectionModel){
+        fun bind(sectionModel: SectionModel, position: Int){
             txtName.text = sectionModel.name
             txtDate.text = sectionModel.date
             txtLastName.text = sectionModel.lastName
 
             edit.setOnClickListener(){
-
-                onItemClickListener.onEditClicked(sectionModel, txtName.text.toString(),txtDate.text.toString(),txtLastName.text.toString())
-
+                onItemClickListener.onEditClicked(sectionModel, position)
             }
 
             delete.setOnClickListener(){

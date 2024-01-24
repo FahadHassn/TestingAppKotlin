@@ -4,19 +4,29 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testingappkotlin.R
 import com.example.testingappkotlin.adapters.RecyclerSectionAdapter
 import com.example.testingappkotlin.interfaces.OnItemClickListener
 import com.example.testingappkotlin.models.Section
 import com.example.testingappkotlin.models.SectionModel
-import com.example.testingappkotlin.R
+import com.example.testingappkotlin.models.UserLoginModel
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -27,18 +37,22 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
     private lateinit var recyclerView: RecyclerView
     private lateinit var sectionAdapter: RecyclerSectionAdapter
     private var list = mutableListOf<SectionModel>()
+    private lateinit var progressBar: ProgressBar
+    private lateinit var databaseReference: DatabaseReference
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view_section_task)
 
-        //Sort
-        val sections = sortedByFirstLetter(list)
+        databaseReference = Firebase.database.reference
+
+        //progress
+        progressBar = findViewById(R.id.sectionRecyclerviewProgress)
 
         //Recyclerview
         recyclerView = findViewById(R.id.sectionRecyclerview)
-        sectionAdapter = RecyclerSectionAdapter(this, sections, this)
+        sectionAdapter = RecyclerSectionAdapter(this, sortedByFirstLetter(list), this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = sectionAdapter
 
@@ -48,24 +62,50 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
             showAddDialog()
         }
 
+        //readData from database
+        readData()
 
         //Sort by name
         val txtName = findViewById<TextView>(R.id.txtSortByName)
         txtName.setOnClickListener() {
-            sectionAdapter = RecyclerSectionAdapter(this, sortedByFirstLetter(list), this)
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = sectionAdapter
+            sectionAdapter.reloadData(sortedByFirstLetter(list))
 
         }
 
         //Sort by date
         val txtDate = findViewById<TextView>(R.id.txtSortByDate)
         txtDate.setOnClickListener() {
-            sectionAdapter = RecyclerSectionAdapter(this, sortedByDate(list), this)
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = sectionAdapter
+            sectionAdapter.reloadData(sortedByDate(list))
         }
     }
+
+    private fun readData() {
+        databaseReference.child("Section Recyclerview").addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    list.clear()
+                    for (dataSnapshot in snapshot.children) {
+                        val sectionModel = dataSnapshot.getValue(SectionModel::class.java)
+                        progressBar.visibility = View.GONE
+                        sectionModel?.let { list.add(it) }
+                        sectionAdapter.reloadData(sortedByFirstLetter(list))
+                    }
+                } else {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        this@RecyclerViewSectionTaskActivity,
+                        "Data not available",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
     @SuppressLint("MissingInflatedId")
     private fun showAddDialog() {
         val builder = AlertDialog.Builder(this)
@@ -103,10 +143,33 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
                 Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
-                list.add(SectionModel(name.trim(), date.trim(),lastName.trim()))
-                sectionAdapter.reloadData(sortedByFirstLetter(list))
-
+                val id = databaseReference.push().key
+                val sectionModel = SectionModel(name.trim(), date.trim(),lastName.trim(),id)
+                if (id != null) {
+                    databaseReference.child("Section Recyclerview").child(id).setValue(sectionModel).addOnSuccessListener {
+                        Toast.makeText(
+                            this,
+                            "Add Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        sectionAdapter.reloadData(sortedByFirstLetter(list))
+                    }.addOnFailureListener {
+                        Toast.makeText(this,
+                            "Failed!",
+                            Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }else{
+                    Toast.makeText(this,
+                        "Something went wrong",
+                        Toast.LENGTH_SHORT)
+                        .show()
+                }
                 alertDialog.dismiss()
+
+//                list.add(SectionModel(name.trim(), date.trim(),lastName.trim()))
+//                sectionAdapter.reloadData(sortedByFirstLetter(list))
+//                alertDialog.dismiss()
             }
         }
 
@@ -129,7 +192,7 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
                 calendar.set(Calendar.MONTH, pickedMonth)
                 calendar.set(Calendar.DAY_OF_MONTH, pickedDay)
 
-                val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
                 val formattedDate = simpleDateFormat.format(calendar.time)
 
                 editTextDate.text = formattedDate
@@ -141,7 +204,7 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
     }
 
     @SuppressLint("MissingInflatedId")
-    override fun onEditClicked(sectionModel: SectionModel, name: String, date: String, lastName: String) {
+    override fun onEditClicked(sectionModel: SectionModel, position: Int) {
         val builder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
         val dialogView = inflater.inflate(R.layout.dialog_box, null)
@@ -164,9 +227,9 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
 
         val alertDialog = builder.create()
 
-        editTextName.setText(name)
-        editTextLastName.setText(lastName)
-        editTextDate.text = date
+        editTextName.setText(sectionModel.name)
+        editTextLastName.setText(sectionModel.lastName)
+        editTextDate.text = sectionModel.date
 
         btnSave.setOnClickListener {
             val newName = editTextName.text.toString()
@@ -180,12 +243,28 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
                 Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else {
-                sectionModel.name = newName
-                sectionModel.date = newDate
-                sectionModel.lastName = newLastName
-                sectionAdapter.reloadData(sortedByFirstLetter(list))
-
+                val updatedData = mapOf(
+                    "name" to newName,
+                    "lastName" to newLastName,
+                    "date" to newDate
+                )
+                databaseReference.child("Section Recyclerview")
+                    .child(sectionModel.id!!)
+                    .updateChildren(updatedData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Update successful", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show()
+                    }
                 alertDialog.dismiss()
+
+//                sectionModel.name = newName
+//                sectionModel.date = newDate
+//                sectionModel.lastName = newLastName
+//                sectionAdapter.reloadData(sortedByFirstLetter(list))
+//
+//                alertDialog.dismiss()
             }
         }
 
@@ -197,7 +276,13 @@ class RecyclerViewSectionTaskActivity : AppCompatActivity(), OnItemClickListener
     }
 
     override fun onDeleteClicked(sectionModel: SectionModel) {
-        list.remove(sectionModel)
+//        list.remove(sectionModel)
+        sectionModel.id?.let {
+            databaseReference.child("Section Recyclerview").child(it)
+                .removeValue().also {
+                list.remove(sectionModel)
+            }
+        }
         sectionAdapter.reloadData(sortedByFirstLetter(list))
     }
 

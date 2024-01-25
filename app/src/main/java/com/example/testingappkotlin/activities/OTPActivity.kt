@@ -13,7 +13,7 @@ import com.google.firebase.auth.auth
 
 class OTPActivity : AppCompatActivity() {
 
-    lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

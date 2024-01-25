@@ -26,8 +26,6 @@ class LoginWithPhoneActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-    private lateinit var verificationCode: String
-    private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var gso: GoogleSignInOptions
     private lateinit var gsc: GoogleSignInClient
 
@@ -115,11 +113,8 @@ class LoginWithPhoneActivity : AppCompatActivity() {
                 token: PhoneAuthProvider.ForceResendingToken,
             ) {
 
-                verificationCode = verificationId
-                forceResendingToken = token
-
                 val intent = Intent(this@LoginWithPhoneActivity, OTPActivity::class.java)
-                intent.putExtra("opt",verificationCode)
+                intent.putExtra("opt",verificationId)
                 startActivity(intent)
                 Toast.makeText(
                     this@LoginWithPhoneActivity,

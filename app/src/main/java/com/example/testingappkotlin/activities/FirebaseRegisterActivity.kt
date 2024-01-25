@@ -41,7 +41,7 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                 firebaseAuth.createUserWithEmailAndPassword(email,password)
                     .addOnSuccessListener {
                         val id: String? = it.user?.uid
-                        val loginModal = UserLoginModel(name, email, phone, password, id)
+                        val loginModal = UserLoginModel(name, email, phone, password, id,"null")
                         if (id != null) {
                             databaseReference.child("Users").child(id).setValue(loginModal).addOnSuccessListener {
                                 binding.registerProgress.visibility = View.GONE

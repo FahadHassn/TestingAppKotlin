@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.testingappkotlin.databinding.FragmentGalleryBinding
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -27,8 +33,12 @@ import com.squareup.picasso.Picasso
 class GalleryFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
-    var pathUri: Uri? = null
-    var IMAGE_PICKER_CODE = 12
+    private var pathUri: Uri? = null
+    private var imagePickerCode = 12
+    private lateinit var storageReference: StorageReference
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var userId: String
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -50,11 +60,60 @@ class GalleryFragment : Fragment() {
             textView.text = it
         }
 
-        binding.galleyButton.setOnClickListener {
-            showImage()
+        firebaseAuth = Firebase.auth
+        databaseReference = Firebase.database.reference.child("Users")
+        storageReference = Firebase.storage.reference.child("Users Images")
+        userId = firebaseAuth.currentUser?.uid.toString()
+
+        binding.apply {
+
+            //select image from galley
+            galleryImageView.setOnClickListener {
+                showImage()
+            }
+
+            //upload image in database
+            galleyButton.setOnClickListener {
+                binding.galleyProgress.visibility = View.VISIBLE
+                uploadImage(userId)
+            }
+
         }
 
         return root
+    }
+
+    private fun uploadImage(id: String) {
+        val hashMap = HashMap<String, Any>()
+
+        if (pathUri != null){
+            val sr = storageReference.child(pathUri?.lastPathSegment!!)
+            sr.putFile(pathUri!!).addOnSuccessListener {
+                sr.downloadUrl.addOnSuccessListener { uri ->
+                    hashMap["image"] = uri.toString()
+                    databaseReference.child(id).updateChildren(hashMap).addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Update Successfully", Toast.LENGTH_SHORT)
+                            .show()
+                        binding.galleyProgress.visibility = View.GONE
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Something went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.galleyProgress.visibility = View.GONE
+                    }
+                }
+            }
+        }else{
+            Toast.makeText(
+                requireContext(),
+                "Select image",
+                Toast.LENGTH_SHORT
+            ).show()
+            binding.galleyProgress.visibility = View.GONE
+        }
+
     }
 
     private fun showImage() {
@@ -67,7 +126,7 @@ class GalleryFragment : Fragment() {
                     intent.setType("image/*")
                     startActivityForResult(
                         Intent.createChooser(intent, "Choose Image"),
-                        IMAGE_PICKER_CODE
+                        imagePickerCode
                     )
 //                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 //                        startActivityForResult(intent, IMAGE_PICKER_CODE)
@@ -98,7 +157,7 @@ class GalleryFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode==IMAGE_PICKER_CODE && resultCode==RESULT_OK){
+        if (requestCode == imagePickerCode && resultCode == RESULT_OK){
             if (data?.data != null) {
                 pathUri = data.data;
 //                Picasso.get().load(pathUri).into(binding.galleryImageView)

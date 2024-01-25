@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.testingappkotlin.activities.FirebaseLoginActivity
 import com.example.testingappkotlin.databinding.FragmentSlideshowBinding
 import com.example.testingappkotlin.models.UserLoginModel
@@ -63,6 +64,7 @@ class SlideshowFragment : Fragment() {
 //                    val name = snapshot.child("name").value.toString()
 //                    val email = snapshot.child("email").value.toString()
 //                    val phone = snapshot.child("phone").value.toString()
+//                    val image = snapshot.child("image").value.toString()
 
                     //read data with model
                     userLoginModel = snapshot.getValue(UserLoginModel::class.java)!!
@@ -70,13 +72,14 @@ class SlideshowFragment : Fragment() {
                     val name = userLoginModel.name
                     val email = userLoginModel.email
                     val phone = userLoginModel.phone
-
-                    binding.profileProgress.visibility = View.GONE
+                    val image = userLoginModel.image
 
                     //set data
                     binding.profileName.setText(name)
                     binding.profileEmail.setText(email)
                     binding.profilePhone.setText(phone)
+                    Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
+                    binding.profileProgress.visibility = View.GONE
                 }
             }
 

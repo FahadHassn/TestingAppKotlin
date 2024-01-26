@@ -54,40 +54,42 @@ class SlideshowFragment : Fragment() {
 
         //get data from firebase database
         firebaseAuth = FirebaseAuth.getInstance()
-        val id = firebaseAuth.currentUser!!.uid
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id)
-        databaseReference.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
+        val id = firebaseAuth.currentUser?.uid
+        if (id != null){
+            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id)
+            databaseReference.addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
 
-                    //read data with keys
+                        //read data with keys
 //                    val name = snapshot.child("name").value.toString()
 //                    val email = snapshot.child("email").value.toString()
 //                    val phone = snapshot.child("phone").value.toString()
 //                    val image = snapshot.child("image").value.toString()
 
-                    //read data with model
-                    userLoginModel = snapshot.getValue(UserLoginModel::class.java)!!
+                        //read data with model
+                        userLoginModel = snapshot.getValue(UserLoginModel::class.java)!!
 
-                    val name = userLoginModel.name
-                    val email = userLoginModel.email
-                    val phone = userLoginModel.phone
-                    val image = userLoginModel.image
+                        val name = userLoginModel.name
+                        val email = userLoginModel.email
+                        val phone = userLoginModel.phone
+                        val image = userLoginModel.image
 
-                    //set data
-                    binding.profileName.setText(name)
-                    binding.profileEmail.setText(email)
-                    binding.profilePhone.setText(phone)
-                    Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
-                    binding.profileProgress.visibility = View.GONE
+                        //set data
+                        binding.profileName.setText(name)
+                        binding.profileEmail.setText(email)
+                        binding.profilePhone.setText(phone)
+                        Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
+                        binding.profileProgress.visibility = View.GONE
+                    }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
 
-        })
+            })
+        }
 
         binding.apply {
 

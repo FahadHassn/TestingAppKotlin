@@ -159,7 +159,7 @@ class GalleryFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == imagePickerCode && resultCode == RESULT_OK){
             if (data?.data != null) {
-                pathUri = data.data;
+                pathUri = data.data
 //                Picasso.get().load(pathUri).into(binding.galleryImageView)
                 Glide.with(requireContext()).load(pathUri).into(binding.galleryImageView)
             }

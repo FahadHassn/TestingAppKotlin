@@ -1,7 +1,6 @@
 package com.example.testingappkotlin.ui.dashboard
 
 import android.Manifest
-import android.R.attr.password
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -79,13 +78,31 @@ class DashboardFragment : Fragment() {
 
         binding.buttonUploadVideo.setOnClickListener {
             binding.videoProgress.visibility = View.VISIBLE
-            uploadVideo()
+            val header = binding.videoHeader.text.toString()
+            val description = binding.videoDescription.text.toString()
+            if (header.isEmpty()){
+                Toast.makeText(
+                    requireContext(),
+                    "Enter title",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }else if (description.isEmpty()){
+                Toast.makeText(
+                    requireContext(),
+                    "Enter description",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }else{
+                uploadVideo(header,description)
+            }
         }
 
         return root
     }
 
-    private fun uploadVideo() {
+    private fun uploadVideo(header: String, description: String) {
         val sr = pathUri?.lastPathSegment?.let { storageReference.child(it) }
         if (sr != null) {
             pathUri?.let {
@@ -93,7 +110,7 @@ class DashboardFragment : Fragment() {
                     .addOnSuccessListener {
                         sr.downloadUrl.addOnSuccessListener { uri ->
                             val id: String? = databaseReference.push().key
-                            val videoModel = VideoModel(id, uri.toString())
+                            val videoModel = VideoModel(id, header, description, uri.toString())
                             if (id != null) {
                                 databaseReference.child(id).setValue(videoModel).addOnSuccessListener {
                                     Toast.makeText(

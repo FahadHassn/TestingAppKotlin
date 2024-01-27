@@ -22,7 +22,7 @@ class VideoAdapter(val context: Context, private val videoModelList: List<VideoM
     inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val videoView: VideoView = itemView.findViewById(R.id.recycler_design_video_view)
-        val playPauseButton: ImageView = itemView.findViewById(R.id.recycler_design_play_pause_button)
+        //val playPauseButton: ImageView = itemView.findViewById(R.id.recycler_design_play_pause_button)
 
     }
 
@@ -44,41 +44,41 @@ class VideoAdapter(val context: Context, private val videoModelList: List<VideoM
         holder.videoView.setMediaController(null)
 
         // Set a click listener to toggle play/pause
-        holder.playPauseButton.setOnClickListener {
-            if (holder.videoView.isPlaying) {
-                holder.videoView.pause()
-                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-            } else {
-                startVideo(holder)
-            }
-        }
-
-        // Set a click listener on the VideoView to toggle play/pause when clicked
-        holder.videoView.setOnClickListener {
-            if (holder.videoView.isPlaying) {
-                holder.videoView.pause()
-                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-            } else {
-                startVideo(holder)
-            }
-        }
-
-        holder.videoView.setOnCompletionListener {
-            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-        }
-    }
-
-    private fun startVideo(holder: VideoViewHolder) {
-        // If there is a currently playing video, pause it
-        currentlyPlayingVideoView?.let {
-            it.pause()
-            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-        }
-        // Start the new video
-        holder.videoView.start()
-        holder.playPauseButton.setImageResource(R.drawable.baseline_pause_circle_24)
-
-        // Update the currentlyPlayingVideoView
-        currentlyPlayingVideoView = holder.videoView
+//        holder.playPauseButton.setOnClickListener {
+//            if (holder.videoView.isPlaying) {
+//                holder.videoView.pause()
+//                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
+//            } else {
+//                startVideo(holder)
+//            }
+//        }
+//
+//        // Set a click listener on the VideoView to toggle play/pause when clicked
+//        holder.videoView.setOnClickListener {
+//            if (holder.videoView.isPlaying) {
+//                holder.videoView.pause()
+//                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
+//            } else {
+//                startVideo(holder)
+//            }
+//        }
+//
+//        holder.videoView.setOnCompletionListener {
+//            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
+//        }
+//    }
+//
+//    private fun startVideo(holder: VideoViewHolder) {
+//        // If there is a currently playing video, pause it
+//        currentlyPlayingVideoView?.let {
+//            it.pause()
+//            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
+//        }
+//        // Start the new video
+//        holder.videoView.start()
+//        holder.playPauseButton.setImageResource(R.drawable.baseline_pause_circle_24)
+//
+//        // Update the currentlyPlayingVideoView
+//        currentlyPlayingVideoView = holder.videoView
     }
 }

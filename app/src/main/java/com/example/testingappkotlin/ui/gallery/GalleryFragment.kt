@@ -87,8 +87,8 @@ class GalleryFragment : Fragment() {
         val hashMap = HashMap<String, Any>()
 
         if (pathUri != null){
-            val sr = storageReference.child(pathUri?.lastPathSegment!!)
-            sr.putFile(pathUri!!).addOnSuccessListener {
+            val sr = pathUri?.lastPathSegment?.let { storageReference.child(it) }
+            sr?.putFile(pathUri!!)?.addOnSuccessListener {
                 sr.downloadUrl.addOnSuccessListener { uri ->
                     hashMap["image"] = uri.toString()
                     databaseReference.child(id).updateChildren(hashMap).addOnSuccessListener {

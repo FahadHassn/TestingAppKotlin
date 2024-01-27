@@ -2,6 +2,7 @@ package com.example.testingappkotlin.ui.notifications
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,24 +55,22 @@ class NotificationsFragment : Fragment() {
         binding.apply {
 
             videoRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-            videoAdapter = VideoAdapter(requireContext(),list)
+            videoAdapter = VideoAdapter(requireContext(), list)
             videoRecyclerview.adapter = videoAdapter
 
-            databaseReference.addValueEventListener(object :
-                ValueEventListener {
+            databaseReference.addValueEventListener(object : ValueEventListener {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         list.clear()
                         for (dataSnapshot in snapshot.children) {
-                            val videoModel = snapshot.getValue(VideoModel::class.java)
-                            videoRecyclerProgress.visibility = View.GONE
+                            val videoModel = dataSnapshot.getValue(VideoModel::class.java)
                             videoModel?.let {
                                 list.add(it)
                             }
                         }
                         videoAdapter.notifyDataSetChanged()
-
+                        videoRecyclerProgress.visibility = View.GONE
                     } else {
                         videoRecyclerProgress.visibility = View.GONE
                         Toast.makeText(
@@ -83,8 +82,8 @@ class NotificationsFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e("NotificationsFragment", "Error reading from the database", error.toException())
                 }
-
             })
 
         }

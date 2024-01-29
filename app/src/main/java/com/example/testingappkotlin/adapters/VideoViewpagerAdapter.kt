@@ -15,6 +15,15 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 class VideoViewpagerAdapter(options: FirebaseRecyclerOptions<VideoModel>) :
     FirebaseRecyclerAdapter<VideoModel, VideoViewpagerAdapter.ViewPagerViewHolder>(options) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.video_recyclerview_design,parent,false)
+        return ViewPagerViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int, model: VideoModel) {
+        holder.setData(model)
+    }
+
     inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val videoView: VideoView = itemView.findViewById(R.id.recycler_design_video_view)
         private val videoHeader: TextView = itemView.findViewById(R.id.recycler_design_video_header)
@@ -26,23 +35,15 @@ class VideoViewpagerAdapter(options: FirebaseRecyclerOptions<VideoModel>) :
             videoHeader.text = videoModel.videoHeader
             videoDescription.text = videoModel.videoDescription
 
-            videoView.setOnPreparedListener { mediaPlayer ->
+            videoView.setOnPreparedListener {
                 process.visibility = View.GONE
-                mediaPlayer.start() }
+                it.start()
+                it.isLooping = true
+            }
 
-            videoView.setOnCompletionListener { mediaPlayer ->
-                mediaPlayer.start() }
-
+            videoView.setOnCompletionListener {
+                it.start()
+            }
         }
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.video_recyclerview_design,parent,false)
-        return ViewPagerViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int, model: VideoModel) {
-        holder.setData(model)
     }
 }

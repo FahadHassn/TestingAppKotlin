@@ -1,9 +1,8 @@
 package com.example.testingappkotlin.activities
 
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.testingappkotlin.R
 import com.example.testingappkotlin.adapters.VideoViewpagerAdapter
 import com.example.testingappkotlin.databinding.ActivityVideoViewpagerBinding
 import com.example.testingappkotlin.models.VideoModel
@@ -25,6 +24,7 @@ class VideoViewpagerActivity : AppCompatActivity() {
 
         val options: FirebaseRecyclerOptions<VideoModel> = Builder<VideoModel>()
             .setQuery(databaseReference, VideoModel::class.java)
+            .setLifecycleOwner(this)
             .build()
 
         videoViewpagerAdapter = VideoViewpagerAdapter(options)
@@ -32,14 +32,14 @@ class VideoViewpagerActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        videoViewpagerAdapter.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        videoViewpagerAdapter.stopListening()
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        videoViewpagerAdapter.startListening()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        videoViewpagerAdapter.stopListening()
+//    }
 
 }

@@ -1,10 +1,16 @@
 package com.example.testingappkotlin.activities
 
+import android.R
+import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import com.example.testingappkotlin.classes.AppNotification
 import com.example.testingappkotlin.databinding.ActivityFirebaseRegisterBinding
 import com.example.testingappkotlin.models.UserLoginModel
 import com.google.firebase.Firebase
@@ -50,7 +56,9 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                                     "Register Successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                startActivity(Intent(this,BottomNavigationActivity::class.java))
+                                val intent = Intent(this,BottomNavigationActivity::class.java)
+                                intent.putExtra("name",name)
+                                startActivity(intent)
                                 finish()
                             }.addOnFailureListener {
                                 binding.registerProgress.visibility = View.GONE
@@ -68,6 +76,7 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                             .show()
                     }
             }
+
         }
 
         binding.firebaseRegisterLoginText.setOnClickListener {

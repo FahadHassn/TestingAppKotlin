@@ -1,6 +1,5 @@
 package com.example.testingappkotlin.activities
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent

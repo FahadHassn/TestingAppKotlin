@@ -1,5 +1,6 @@
 package com.example.testingappkotlin.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.MediaController
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.VideoView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testingappkotlin.R
@@ -17,12 +20,15 @@ import com.example.testingappkotlin.models.VideoModel
 class VideoAdapter(val context: Context, private val videoModelList: List<VideoModel>) :
     RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
-    private var currentlyPlayingVideoView: VideoView? = null
+    private var currentPlayingPosition: Int? = null
+    private var currentVideoView: VideoView? = null
 
     inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val videoView: VideoView = itemView.findViewById(R.id.recycler_design_video_view)
-        //val playPauseButton: ImageView = itemView.findViewById(R.id.recycler_design_play_pause_button)
+        val progressBar: ProgressBar = itemView.findViewById(R.id.recycler_design_video_progress)
+        val videoHeader: TextView = itemView.findViewById(R.id.recycler_design_video_header)
+        val videoDescription: TextView = itemView.findViewById(R.id.recycler_design_video_description)
 
     }
 
@@ -35,50 +41,59 @@ class VideoAdapter(val context: Context, private val videoModelList: List<VideoM
         return videoModelList.size
     }
 
-    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VideoViewHolder, @SuppressLint("RecyclerView") position: Int) {
+//        val videoModel = videoModelList[position]
+//
+//        holder.apply {
+//            val mediaController = MediaController(context)
+//            mediaController.setAnchorView(videoView)
+//            videoView.setVideoPath(videoModel.video)
+//            videoView.setMediaController(mediaController)
+//
+//            videoHeader.text = videoModel.videoHeader
+//            videoDescription.text = videoModel.videoDescription
+//
+//            videoView.setOnPreparedListener {
+//                progressBar.visibility = View.GONE
+//                it.start()
+//            }
+//        }
+
         val videoModel = videoModelList[position]
 
-        holder.videoView.setVideoURI(Uri.parse(videoModel.video))
+        holder.apply {
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(videoView)
+            videoView.setVideoPath(videoModel.video)
+            videoView.setMediaController(mediaController)
 
-        // Set MediaController to null to hide the default controller
-        holder.videoView.setMediaController(null)
+            videoHeader.text = videoModel.videoHeader
+            videoDescription.text = videoModel.videoDescription
 
-        // Set a click listener to toggle play/pause
-//        holder.playPauseButton.setOnClickListener {
-//            if (holder.videoView.isPlaying) {
-//                holder.videoView.pause()
-//                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-//            } else {
-//                startVideo(holder)
-//            }
-//        }
-//
-//        // Set a click listener on the VideoView to toggle play/pause when clicked
-//        holder.videoView.setOnClickListener {
-//            if (holder.videoView.isPlaying) {
-//                holder.videoView.pause()
-//                holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-//            } else {
-//                startVideo(holder)
-//            }
-//        }
-//
-//        holder.videoView.setOnCompletionListener {
-//            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-//        }
-//    }
-//
-//    private fun startVideo(holder: VideoViewHolder) {
-//        // If there is a currently playing video, pause it
-//        currentlyPlayingVideoView?.let {
-//            it.pause()
-//            holder.playPauseButton.setImageResource(R.drawable.baseline_play_circle_24)
-//        }
-//        // Start the new video
-//        holder.videoView.start()
-//        holder.playPauseButton.setImageResource(R.drawable.baseline_pause_circle_24)
-//
-//        // Update the currentlyPlayingVideoView
-//        currentlyPlayingVideoView = holder.videoView
+            videoView.setOnPreparedListener {
+                progressBar.visibility = View.GONE
+
+                // Check if there is a video currently playing
+                if (currentPlayingPosition != null && currentPlayingPosition != position) {
+                    // Pause the currently playing video
+                    currentVideoView?.pause()
+                }
+
+                // Set the current video as the one being played
+                currentPlayingPosition = position
+                currentVideoView = videoView
+
+                // Start playing the video
+                it.start()
+            }
+
+            // Add an optional setOnCompletionListener to handle video completion
+            videoView.setOnCompletionListener {
+                // Reset the current playing position
+                currentPlayingPosition = null
+                currentVideoView = null
+            }
+        }
+
     }
 }

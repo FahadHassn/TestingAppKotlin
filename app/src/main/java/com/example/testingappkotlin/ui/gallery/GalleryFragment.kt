@@ -27,7 +27,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
-import com.squareup.picasso.Picasso
 
 
 class GalleryFragment : Fragment() {

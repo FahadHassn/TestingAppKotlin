@@ -22,8 +22,8 @@ import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 
 class SlideshowFragment : Fragment() {
 
@@ -53,11 +53,11 @@ class SlideshowFragment : Fragment() {
         }
 
         //get data from firebase database
-        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth = Firebase.auth
         val id = firebaseAuth.currentUser?.uid
         if (id != null){
-            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id)
-            databaseReference.addValueEventListener(object : ValueEventListener{
+            databaseReference = Firebase.database.reference.child("Users")
+            databaseReference.child(id).addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()){
 
@@ -79,8 +79,11 @@ class SlideshowFragment : Fragment() {
                         binding.profileName.setText(name)
                         binding.profileEmail.setText(email)
                         binding.profilePhone.setText(phone)
-                        Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
+                        if (userLoginModel.image != null){
+                            Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
+                        }
                         binding.profileProgress.visibility = View.GONE
+                        binding.profileUpdateButton.isEnabled = true
                     }
                 }
 

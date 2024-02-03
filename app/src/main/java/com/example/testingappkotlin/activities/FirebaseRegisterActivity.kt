@@ -50,7 +50,7 @@ class FirebaseRegisterActivity : AppCompatActivity() {
                                     "Register Successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                val intent = Intent(this,BottomNavigationActivity::class.java)
+                                val intent = Intent(this,DrawerNavigationActivity::class.java)
                                 intent.putExtra("name",name)
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 startActivity(intent)

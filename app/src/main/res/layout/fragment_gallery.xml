@@ -6,26 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.gallery.GalleryFragment">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/gallery_imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="60dp"
-        android:layout_marginBottom="20dp"
         android:scaleType="fitXY"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toTopOf="@+id/galley_button"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/baseline_add_photo_alternate_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ImageCorner" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/galley_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:text="Upload"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/text_gallery"
@@ -38,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="280dp"
+        android:layout_marginBottom="200dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,12 +49,10 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:indeterminateTint="?attr/actionModeSplitBackground"
-        android:visibility="gone"
+       android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.363" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

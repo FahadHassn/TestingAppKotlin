@@ -1,5 +1,6 @@
 package com.example.testingappkotlin.ui.slideshow
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -52,10 +53,12 @@ class SlideshowFragment : Fragment() {
             textView.text = it
         }
 
-        //get data from firebase database
+
         firebaseAuth = Firebase.auth
         databaseReference = Firebase.database.reference.child("Users")
         val id = firebaseAuth.currentUser?.uid
+
+        //get data from firebase database
         if (id != null ){
             databaseReference.child(id).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,25 +120,87 @@ class SlideshowFragment : Fragment() {
 
             //delete account
             profileDeleteAccount.setOnClickListener {
-                val user: FirebaseUser? = firebaseAuth.currentUser
-                user?.delete()?.addOnSuccessListener {
-                    databaseReference.removeValue()
-                    firebaseAuth.signOut()
-                    startActivity(Intent(requireContext(),FirebaseLoginActivity::class.java))
-                    requireActivity().finish()
-                    Toast.makeText(
-                        requireContext(),
-                        "Delete Successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }?.addOnFailureListener {
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // Show a confirmation dialog
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Confirmation")
+                    .setMessage("Are you sure you want to delete your account?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        // User clicked Yes, proceed with account deletion
+                        val user: FirebaseUser? = firebaseAuth.currentUser
+
+                        if (id != null && user != null) {
+                            user.delete()
+                                .addOnSuccessListener {
+                                    databaseReference.child(id).removeValue()
+                                        .addOnSuccessListener {
+                                            firebaseAuth.signOut()
+                                            startActivity(
+                                                Intent(
+                                                    requireContext(),
+                                                    FirebaseLoginActivity::class.java
+                                                )
+                                            )
+                                            requireActivity().finish()
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Delete Successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Something went wrong",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Something went wrong",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }else {
+                            Toast.makeText(
+                                requireContext(),
+                                "First login again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    .setNegativeButton("No", null) // User clicked No, do nothing
+                    .show()
             }
+//            profileDeleteAccount.setOnClickListener {
+//                val user: FirebaseUser? = firebaseAuth.currentUser
+//                if (id != null) {
+//                    user?.delete()?.addOnSuccessListener {
+//                        databaseReference.child(id).removeValue().addOnSuccessListener {
+//                            firebaseAuth.signOut()
+//                            startActivity(
+//                                Intent(
+//                                    requireContext(),
+//                                    FirebaseLoginActivity::class.java
+//                                )
+//                            )
+//                            requireActivity().finish()
+//                            Toast.makeText(
+//                                requireContext(),
+//                                "Delete Successfully",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }?.addOnFailureListener {
+//                        Toast.makeText(
+//                            requireContext(),
+//                            "Something went wrong",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
 
             //logout
             profileLogout.setOnClickListener {

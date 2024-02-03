@@ -54,11 +54,12 @@ class SlideshowFragment : Fragment() {
 
         //get data from firebase database
         firebaseAuth = Firebase.auth
+        databaseReference = Firebase.database.reference.child("Users")
         val id = firebaseAuth.currentUser?.uid
-        if (id != null){
-            databaseReference = Firebase.database.reference.child("Users")
-            databaseReference.child(id).addListenerForSingleValueEvent(object : ValueEventListener{
+        if (id != null ){
+            databaseReference.child(id).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+
                     if (snapshot.exists()){
 
                         //read data with keys
@@ -75,15 +76,15 @@ class SlideshowFragment : Fragment() {
                         val phone = userLoginModel.phone
                         val image = userLoginModel.image
 
-                        //set data
-                        binding.profileName.setText(name)
-                        binding.profileEmail.setText(email)
-                        binding.profilePhone.setText(phone)
-                        if (userLoginModel.image != null){
+                        if (_binding != null){
+                            //set data
+                            binding.profileName.setText(name)
+                            binding.profileEmail.setText(email)
+                            binding.profilePhone.setText(phone)
                             Glide.with(this@SlideshowFragment).load(image).into(binding.profileImageView)
+                            binding.profileProgress.visibility = View.GONE
+                            binding.profileUpdateButton.isEnabled = true
                         }
-                        binding.profileProgress.visibility = View.GONE
-                        binding.profileUpdateButton.isEnabled = true
                     }
                 }
 

@@ -77,7 +77,6 @@ class DashboardFragment : Fragment() {
         }
 
         binding.buttonUploadVideo.setOnClickListener {
-            binding.videoProgress.visibility = View.VISIBLE
             val header = binding.videoHeader.text.toString()
             val description = binding.videoDescription.text.toString()
             if (header.isEmpty()){
@@ -95,6 +94,7 @@ class DashboardFragment : Fragment() {
                 ).show()
                 return@setOnClickListener
             }else{
+                binding.videoProgress.visibility = View.VISIBLE
                 uploadVideo(header,description)
             }
         }
@@ -131,6 +131,13 @@ class DashboardFragment : Fragment() {
                         }
                     }
             }
+        }else{
+            Toast.makeText(
+                requireContext(),
+                "Select Video",
+                Toast.LENGTH_SHORT
+            ).show()
+            binding.videoProgress.visibility = View.GONE
         }
 
     }

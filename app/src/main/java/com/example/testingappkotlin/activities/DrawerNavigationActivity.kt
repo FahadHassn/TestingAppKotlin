@@ -119,13 +119,13 @@ class DrawerNavigationActivity : AppCompatActivity() {
         val intent = intent
         val name = intent.getStringExtra("name")
 
-        val activityIntent = Intent(this, BottomNavigationActivity::class.java)
+        val activityIntent = Intent(this, DrawerNavigationActivity::class.java)
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val contentIntent: PendingIntent = PendingIntent.getActivity(
             this, 0, activityIntent, PendingIntent.FLAG_IMMUTABLE
         )
 
-        val actionActivityIntent = Intent(this, BottomNavigationActivity::class.java)
+        val actionActivityIntent = Intent(this, DrawerNavigationActivity::class.java)
         actionActivityIntent.putExtra("key", "Welcome to Testing app kotlin")
         actionActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val actionIntent: PendingIntent = PendingIntent.getActivity(

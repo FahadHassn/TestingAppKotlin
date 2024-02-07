@@ -89,7 +89,7 @@
         android:id="@+id/firebase_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignIn"
+        android:text="Sign In"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

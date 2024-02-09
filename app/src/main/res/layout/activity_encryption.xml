@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EncryptionActivity">
+
+    <TextView
+        android:id="@+id/encryption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Encryption"
+        android:textAlignment="center"
+        android:textColor="?attr/actionModeSplitBackground"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/encryption_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:boxStrokeColor="#7E7E7E"
+        app:cursorColor="#7E7E7E"
+        app:hintTextColor="#7E7E7E"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/encryption">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/encryption_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/baseline_text_snippet_24"
+            android:drawablePadding="10dp"
+            android:textColor="#7E7E7E"
+            android:drawableTint="#7E7E7E"
+            android:inputType="textPersonName"
+            android:hint="Enter text here" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/encryption_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Encrypt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/encryption_text" />
+
+    <TextView
+        android:id="@+id/encrypted_text_heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Your Encrypted text:"
+        android:textColor="?attr/actionModeSplitBackground"
+        android:textSize="18sp"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/encryption_button" />
+
+    <TextView
+        android:id="@+id/encrypted_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#7E7E7E"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/encrypted_text_heading" />
+
+    <Button
+        android:id="@+id/copy_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/encrypted_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

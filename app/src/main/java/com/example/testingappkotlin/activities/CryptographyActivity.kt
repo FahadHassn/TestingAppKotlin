@@ -18,7 +18,7 @@ class CryptographyActivity : AppCompatActivity() {
                 startActivity(Intent(this@CryptographyActivity,EncryptionActivity::class.java))
             }
 
-            cryptographyEncryptionButton.setOnClickListener {
+            cryptographyDecryptionButton.setOnClickListener {
                 startActivity(Intent(this@CryptographyActivity,DecryptionActivity::class.java))
             }
 
